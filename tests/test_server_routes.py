@@ -24,7 +24,19 @@ from server import (
     get_audit_logs,
     submit_engineering_task,
     list_engineering_tasks,
-    EngineeringTaskSubmit
+    EngineeringTaskSubmit,
+    get_reddit_metrics,
+    list_reddit_communities,
+    ingest_reddit_discussion,
+    list_reddit_opportunities,
+    draft_reddit_answer,
+    list_reddit_drafts,
+    review_reddit_draft,
+    toggle_reddit_emergency_stop,
+    RedditIngestRequest,
+    RedditDraftRequest,
+    RedditReviewRequest,
+    RedditEmergencyStopRequest
 )
 from engine.db_federation import TenantProvisionRequest
 
@@ -163,4 +175,53 @@ def test_endpoint_engineering_tasks():
     
     tasks = list_engineering_tasks()
     assert tasks["count"] >= 1
+
+def test_endpoint_reddit_metrics_and_communities():
+    metrics = get_reddit_metrics()
+    assert "total_discussions_discovered" in metrics
+    assert "monitored_communities_count" in metrics
+
+    comms = list_reddit_communities()
+    assert comms["count"] >= 5
+    assert any(c["name"] == "smallbusiness" for c in comms["communities"])
+
+def test_endpoint_reddit_ingest_and_opportunities():
+    req = RedditIngestRequest(
+        reddit_post_id="t3_srv001",
+        subreddit="smallbusiness",
+        title="Server route ingest test for lead conversion",
+        excerpt="How to handle sales follow-up and speed to lead."
+    )
+    res = ingest_reddit_discussion(req)
+    assert res["success"] is True
+
+    opps = list_reddit_opportunities()
+    assert opps["count"] >= 1
+    assert any(c["reddit_post_id"] == "t3_srv001" for c in opps["candidates"])
+
+def test_endpoint_reddit_draft_and_review():
+    opps = list_reddit_opportunities()
+    cand_id = opps["candidates"][0]["id"]
+
+    draft_req = RedditDraftRequest(candidate_id=cand_id, style="DETAILED_ANSWER")
+    draft_res = draft_reddit_answer(draft_req)
+    assert draft_res["status"] == "AWAITING_APPROVAL"
+    draft_id = draft_res["id"]
+
+    drafts = list_reddit_drafts()
+    assert drafts["count"] >= 1
+
+    rev_req = RedditReviewRequest(draft_id=draft_id, action="APPROVE", reviewer="CTO")
+    rev_res = review_reddit_draft(rev_req)
+    assert rev_res["status"] == "APPROVED_FOR_MANUAL_ACTION"
+    assert "clipboard_ready_body" in rev_res
+
+def test_endpoint_reddit_emergency_stop():
+    stop_req = RedditEmergencyStopRequest(active=True, reason="Maintenance test")
+    res = toggle_reddit_emergency_stop(stop_req)
+    assert res["emergency_stop_active"] is True
+
+    restore_req = RedditEmergencyStopRequest(active=False)
+    res_restore = toggle_reddit_emergency_stop(restore_req)
+    assert res_restore["emergency_stop_active"] is False
 

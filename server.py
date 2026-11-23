@@ -38,6 +38,7 @@ from engine.whatsapp_webhook import whatsapp_webhook_processor
 from engine.whatsapp_templates import whatsapp_templates, APPROVED_TEMPLATES
 from engine.db_federation import db_federation_service, TenantProvisionRequest
 from engine.engineering_queue import engineering_queue
+from engine.reddit_engine import reddit_engine
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("AV-SalesOS")
@@ -163,6 +164,137 @@ def list_engineering_tasks(status: Optional[str] = None, category: Optional[str]
         "count": len(engineering_queue.list_tasks(status, category)),
         "tasks": engineering_queue.list_tasks(status, category)
     }
+
+# ==============================================================================
+# REDDIT INTELLIGENCE, CONTENT & ORGANIC ACQUISITION API ENDPOINTS
+# ==============================================================================
+
+@app.get("/api/v1/reddit/metrics")
+def get_reddit_metrics():
+    """Returns real operational metrics for the Reddit Growth Engine."""
+    return reddit_engine.get_operational_metrics()
+
+@app.get("/api/v1/reddit/communities")
+def list_reddit_communities():
+    """Lists monitored subreddit communities with rules, promo policy, and eligibility."""
+    return {
+        "count": len(reddit_engine.communities),
+        "communities": [c.model_dump() for c in reddit_engine.communities.values()]
+    }
+
+@app.get("/api/v1/reddit/opportunities")
+def list_reddit_opportunities():
+    """Lists discovered Reddit discussions with explainable 100-pt opportunity scores."""
+    cands = [c.model_dump() for c in reddit_engine.discussion_candidates.values()]
+    scores = {sid: s.model_dump() for sid, s in reddit_engine.opportunity_scores.items()}
+    return {
+        "count": len(cands),
+        "candidates": cands,
+        "scores": scores
+    }
+
+class RedditIngestRequest(BaseModel):
+    reddit_post_id: Optional[str] = None
+    subreddit: str
+    title: str
+    excerpt: Optional[str] = ""
+    post_url: Optional[str] = None
+    upvotes: Optional[int] = 0
+    comment_count: Optional[int] = 0
+
+@app.post("/api/v1/reddit/ingest")
+def ingest_reddit_discussion(req: RedditIngestRequest):
+    """Ingests a discussion candidate, sanitizes input, and computes 100-pt score."""
+    return reddit_engine.ingest_discussion(req.model_dump())
+
+class RedditDraftRequest(BaseModel):
+    candidate_id: str
+    style: Optional[str] = "DETAILED_ANSWER"
+
+@app.post("/api/v1/reddit/draft")
+def draft_reddit_answer(req: RedditDraftRequest):
+    """Generates an educational, high-utility answer draft awaiting human approval."""
+    draft = reddit_engine.draft_answer(req.candidate_id, style=req.style)
+    return draft.model_dump()
+
+@app.get("/api/v1/reddit/drafts")
+def list_reddit_drafts():
+    """Lists all answer drafts and approval states."""
+    drafts = [d.model_dump() for d in reddit_engine.drafts.values()]
+    return {
+        "count": len(drafts),
+        "drafts": drafts
+    }
+
+class RedditReviewRequest(BaseModel):
+    draft_id: str
+    action: str  # 'APPROVE', 'EDIT_AND_APPROVE', 'REJECT'
+    reviewer: Optional[str] = "Founder"
+    edited_body: Optional[str] = None
+    notes: Optional[str] = None
+
+@app.post("/api/v1/reddit/review")
+def review_reddit_draft(req: RedditReviewRequest):
+    """Human-in-the-loop review: produces 1-click clipboard payload on approval."""
+    return reddit_engine.review_and_approve_draft(
+        draft_id=req.draft_id,
+        action=req.action,
+        reviewer=req.reviewer,
+        edited_body=req.edited_body,
+        notes=req.notes
+    )
+
+class RedditPublishConfirmRequest(BaseModel):
+    draft_id: str
+    published_by: str = "Founder"
+    reddit_comment_id: str
+    permalink: str
+
+@app.post("/api/v1/reddit/publish-confirm")
+def confirm_reddit_publication(req: RedditPublishConfirmRequest):
+    """Confirms publication and registers thread for ongoing conversation monitoring."""
+    return reddit_engine.record_publication(
+        draft_id=req.draft_id,
+        published_by=req.published_by,
+        reddit_comment_id=req.reddit_comment_id,
+        permalink=req.permalink
+    )
+
+@app.get("/api/v1/reddit/monitored")
+def list_reddit_monitored_threads():
+    """Lists monitored threads and detected conversation events."""
+    threads = [t.model_dump() for t in reddit_engine.monitored_threads.values()]
+    return {
+        "count": len(threads),
+        "monitored_threads": threads
+    }
+
+class RedditConsentLeadRequest(BaseModel):
+    monitored_id: str
+    sender_name: str
+    email: str
+    company: str
+    intent_description: str
+
+@app.post("/api/v1/reddit/consent-lead")
+def record_consented_reddit_lead(req: RedditConsentLeadRequest):
+    """Synchronizes explicitly consented inbound lead into GoHighLevel CRM."""
+    return reddit_engine.record_consented_lead_to_ghl(
+        monitored_id=req.monitored_id,
+        sender_name=req.sender_name,
+        email=req.email,
+        company=req.company,
+        intent_description=req.intent_description
+    )
+
+class RedditEmergencyStopRequest(BaseModel):
+    active: bool
+    reason: Optional[str] = "Operator trigger"
+
+@app.post("/api/v1/reddit/emergency-stop")
+def toggle_reddit_emergency_stop(req: RedditEmergencyStopRequest):
+    """Toggles global emergency kill switch for all Reddit automation."""
+    return reddit_engine.set_emergency_stop(active=req.active, reason=req.reason)
 
 @app.get("/api/v1/metrics")
 def get_metrics():

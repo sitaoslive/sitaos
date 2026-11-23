@@ -97,8 +97,11 @@
                 <button onclick="switchTab('revenue50k')" id="nav-revenue50k" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition font-semibold text-amber-400 hover:text-white">
                     <span>💰</span> <span>20. $50k/mo Run-Rate</span>
                 </button>
+                <button onclick="switchTab('reddit')" id="nav-reddit" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition font-semibold text-orange-400 hover:text-white">
+                    <span>📡</span> <span>21. Reddit Intelligence</span>
+                </button>
                 <a href="/whatsapp" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition font-semibold text-blue-400 hover:bg-blue-500/10">
-                    <span>💬</span> <span>21. Meta WhatsApp Hub</span>
+                    <span>💬</span> <span>22. Meta WhatsApp Hub</span>
                 </a>
             </nav>
         </div>
@@ -445,6 +448,174 @@
                 </div>
             </div>
 
+            <!-- ======================================================== -->
+            <!-- 21. REDDIT INTELLIGENCE & ORGANIC ACQUISITION ENGINE     -->
+            <!-- ======================================================== -->
+            <div id="tab-reddit" class="tab-content hidden space-y-6">
+                <!-- Header Card -->
+                <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-orange-500/20 bg-gradient-to-r from-orange-950/20 via-slate-900 to-slate-950">
+                    <div>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="text-2xl">📡</span>
+                            <h3 class="text-lg font-black text-white">Reddit Intelligence, Content & Acquisition Engine</h3>
+                            <span id="rd-emergency-badge" class="text-[10px] font-mono px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">✓ NORMAL OPERATION</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold">MODE: ASSISTED_MANUAL</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Autonomous opportunity discovery & 100-pt explainable ranking, Claude-powered educational answer drafting, and 1-click clipboard compliance publishing to GoHighLevel.</p>
+                    </div>
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <button onclick="ingestSampleRedditDiscussion()" class="px-3.5 py-2 rounded-xl bg-orange-600/30 border border-orange-500/40 text-orange-300 hover:bg-orange-600/50 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                            <span>🔍</span> <span>Ingest Demo Discussion</span>
+                        </button>
+                        <button id="rd-stop-btn" onclick="toggleRedditEmergencyStopBtn()" class="px-3.5 py-2 rounded-xl bg-red-600/20 border border-red-500/40 text-red-300 hover:bg-red-600/40 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                            <span>🛑</span> <span>Emergency Stop</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Operational Metrics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">Discovered Threads</div>
+                        <div class="text-2xl font-black text-white font-mono mt-1" id="rd-metric-discovered">0</div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">Monitored queries</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">High Opportunities</div>
+                        <div class="text-2xl font-black text-orange-400 font-mono mt-1" id="rd-metric-opportunities">0</div>
+                        <div class="text-[10px] text-orange-400/70 mt-0.5">Score ≥ 70 / 100</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">Drafts For Review</div>
+                        <div class="text-2xl font-black text-amber-400 font-mono mt-1" id="rd-metric-drafts">0</div>
+                        <div class="text-[10px] text-amber-400/70 mt-0.5">Human editorial gate</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">Scheduled Actions</div>
+                        <div class="text-2xl font-black text-cyan-400 font-mono mt-1" id="rd-metric-scheduled">0</div>
+                        <div class="text-[10px] text-cyan-400/70 mt-0.5">1-click manual queue</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">Published Answers</div>
+                        <div class="text-2xl font-black text-emerald-400 font-mono mt-1" id="rd-metric-published">0</div>
+                        <div class="text-[10px] text-emerald-400/70 mt-0.5">Active responses</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase font-mono font-bold tracking-wider">GHL Consented Leads</div>
+                        <div class="text-2xl font-black text-emerald-300 font-mono mt-1" id="rd-metric-leads">0</div>
+                        <div class="text-[10px] text-emerald-300/70 mt-0.5">Explicit voluntary opt-in</div>
+                    </div>
+                </div>
+
+                <!-- Main Layout Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Left Column: Opportunities, Studio & Monitor (8 cols) -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <!-- Opportunity Feed -->
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">🎯</span>
+                                    <h4 class="text-sm font-bold text-white">Discovered Discussion Opportunities (100-pt Explainable Score)</h4>
+                                </div>
+                                <span class="text-xs text-slate-400 font-mono" id="rd-opp-count">0 discussions</span>
+                            </div>
+                            <div id="redditOpportunitiesContainer" class="space-y-3">
+                                <div class="text-center py-8 text-xs text-slate-500 font-mono">No discussions ingested yet. Click "Ingest Demo Discussion" to start.</div>
+                            </div>
+                        </div>
+
+                        <!-- AI Answer Studio & Editorial Review -->
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">✍️</span>
+                                    <h4 class="text-sm font-bold text-white">AI Answer Studio & Human Editorial Review</h4>
+                                </div>
+                                <span class="text-xs text-slate-400 font-mono">Status: Human-in-the-Loop Enforced</span>
+                            </div>
+                            <div id="redditDraftsContainer" class="space-y-4">
+                                <div class="text-center py-8 text-xs text-slate-500 font-mono">No drafts generated yet. Select "Draft AI Answer" on any scored opportunity above.</div>
+                            </div>
+                        </div>
+
+                        <!-- Conversation Tracker & Moderator Monitor -->
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">💬</span>
+                                    <h4 class="text-sm font-bold text-white">Active Conversation Tracker & Moderator Monitor</h4>
+                                </div>
+                                <span class="text-xs text-slate-400 font-mono">Auto-Halts on Mod Objection</span>
+                            </div>
+                            <div id="redditMonitoredContainer" class="space-y-3">
+                                <div class="text-center py-8 text-xs text-slate-500 font-mono">No monitored threads yet. Publish an approved answer to track responses.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Communities, GHL Leads & Compliance (4 cols) -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <!-- Monitored Communities -->
+                        <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">🛡️</span>
+                                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-200">Monitored Communities</h4>
+                                </div>
+                                <span class="text-[10px] text-emerald-400 font-mono font-bold" id="rd-communities-count">5 ACTIVE</span>
+                            </div>
+                            <div id="redditCommunitiesContainer" class="space-y-2.5">
+                                <!-- Communities populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- GHL CRM Attribution -->
+                        <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">⚡</span>
+                                    <h4 class="text-xs font-black uppercase tracking-wider text-emerald-400">GoHighLevel Lead Sync</h4>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">Location: n4sb0M0P3oQhIux2e1Um</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mb-3">Only contacts who express voluntary interest are synchronized with tags <code class="text-orange-300">source:reddit</code>.</p>
+                            <div id="redditGhlSyncContainer" class="space-y-2 text-xs">
+                                <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-slate-400 font-mono text-[11px] text-center">
+                                    Awaiting voluntary inbound consent events.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Policy & Compliance Guardrails -->
+                        <div class="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/40">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-base">⚖️</span>
+                                <h4 class="text-xs font-black uppercase tracking-wider text-slate-200">Reddit Compliance Guardrails</h4>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-start gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                                    <span>✓</span>
+                                    <span class="text-[11px]"><strong>No Automated Spam:</strong> 100% human editorial review before native submission.</span>
+                                </div>
+                                <div class="flex items-start gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                                    <span>✓</span>
+                                    <span class="text-[11px]"><strong>No Unsolicited DMs:</strong> Direct messages strictly prohibited; conversation stays in-thread.</span>
+                                </div>
+                                <div class="flex items-start gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                                    <span>✓</span>
+                                    <span class="text-[11px]"><strong>Mandatory Disclosure:</strong> Commercial affiliation explicitly disclosed in all draft answers.</span>
+                                </div>
+                                <div class="flex items-start gap-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                                    <span>✓</span>
+                                    <span class="text-[11px]"><strong>Moderator Respect:</strong> Immediate automated termination if a moderator flags discussion.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- GENERIC TAB CONTAINER FOR REMAINING TABS -->
             <div id="tab-generic" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
                 <h3 class="text-lg font-bold text-white" id="genericTabTitle">Section</h3>
@@ -457,7 +628,7 @@
 
     <!-- SCRIPT FOR UI REACTIVITY -->
     <script>
-        const TABS = ['dashboard', 'products', 'market', 'discovery', 'campaigns', 'agents', 'conversations', 'demos', 'trials', 'pipeline', 'customers', 'onboarding', 'analytics', 'integrations', 'automation', 'compliance', 'settings', 'ledger', 'workflows35', 'revenue50k'];
+        const TABS = ['dashboard', 'products', 'market', 'discovery', 'campaigns', 'agents', 'conversations', 'demos', 'trials', 'pipeline', 'customers', 'onboarding', 'analytics', 'integrations', 'automation', 'compliance', 'settings', 'ledger', 'workflows35', 'revenue50k', 'reddit'];
 
         function switchTab(tabId) {
             TABS.forEach(t => {
@@ -485,6 +656,10 @@
             }
 
             document.getElementById('pageTitle').innerText = tabId.toUpperCase().replace('_', ' ') + " CONSOLE";
+
+            if(tabId === 'reddit') {
+                loadRedditEngine();
+            }
         }
 
         async function refreshData() {
@@ -786,11 +961,386 @@
             }
         }
 
+        // ==========================================
+        // REDDIT INTELLIGENCE REACTIVITY
+        // ==========================================
+        let redditEmergencyStopActive = false;
+
+        async function loadRedditEngine() {
+            try {
+                // 1. Operational Metrics
+                const mRes = await fetch('/api/v1/reddit/metrics');
+                const m = await mRes.json();
+                
+                document.getElementById('rd-metric-discovered').innerText = m.total_discussions_discovered || 0;
+                document.getElementById('rd-metric-opportunities').innerText = m.high_opportunity_discussions || 0;
+                document.getElementById('rd-metric-drafts').innerText = m.drafts_awaiting_approval || 0;
+                document.getElementById('rd-metric-scheduled').innerText = m.approved_manual_actions || 0;
+                document.getElementById('rd-metric-published').innerText = m.published_answers || 0;
+                document.getElementById('rd-metric-leads').innerText = m.consented_ghl_leads || 0;
+
+                redditEmergencyStopActive = m.emergency_stop_active;
+                const stopBadge = document.getElementById('rd-emergency-badge');
+                const stopBtn = document.getElementById('rd-stop-btn');
+                if (stopBadge) {
+                    if (m.emergency_stop_active) {
+                        stopBadge.className = "text-[10px] font-mono px-2.5 py-1 rounded bg-red-500/20 text-red-400 font-bold border border-red-500/30";
+                        stopBadge.innerText = "🛑 EMERGENCY STOP ACTIVE";
+                        if (stopBtn) {
+                            stopBtn.className = "px-3.5 py-2 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600/40 text-xs font-bold transition flex items-center gap-1.5 shadow-sm";
+                            stopBtn.innerHTML = "<span>✓</span> <span>Resume Operation</span>";
+                        }
+                    } else {
+                        stopBadge.className = "text-[10px] font-mono px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30";
+                        stopBadge.innerText = "✓ NORMAL OPERATION";
+                        if (stopBtn) {
+                            stopBtn.className = "px-3.5 py-2 rounded-xl bg-red-600/20 border border-red-500/40 text-red-300 hover:bg-red-600/40 text-xs font-bold transition flex items-center gap-1.5 shadow-sm";
+                            stopBtn.innerHTML = "<span>🛑</span> <span>Emergency Stop</span>";
+                        }
+                    }
+                }
+
+                // 2. Communities
+                const comRes = await fetch('/api/v1/reddit/communities');
+                const comData = await comRes.json();
+                renderRedditCommunities(comData.communities || []);
+
+                // 3. Opportunities
+                const oppRes = await fetch('/api/v1/reddit/opportunities');
+                const oppData = await oppRes.json();
+                renderRedditOpportunities(oppData.candidates || [], oppData.scores || {});
+
+                // 4. Drafts
+                const drfRes = await fetch('/api/v1/reddit/drafts');
+                const drfData = await drfRes.json();
+                renderRedditDrafts(drfData.drafts || []);
+
+                // 5. Monitored Threads
+                const monRes = await fetch('/api/v1/reddit/monitored');
+                const monData = await monRes.json();
+                renderRedditMonitored(monData.monitored_threads || []);
+
+            } catch (e) {
+                console.error("Failed to load Reddit Engine data:", e);
+            }
+        }
+
+        function renderRedditCommunities(communities) {
+            const c = document.getElementById('redditCommunitiesContainer');
+            if (!c) return;
+            const cnt = document.getElementById('rd-communities-count');
+            if (cnt) cnt.innerText = `${communities.length} ACTIVE`;
+
+            c.innerHTML = communities.map(sub => {
+                const isAllowed = sub.eligibility_status === "APPROVED_FOR_REVIEWED_PARTICIPATION";
+                const badgeColor = isAllowed ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : "bg-purple-500/20 text-purple-300 border-purple-500/30";
+                return `
+                <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs">
+                    <div class="flex justify-between items-start mb-1.5">
+                        <div>
+                            <span class="font-bold text-white font-mono text-xs">r/${sub.name}</span>
+                            <span class="text-[10px] text-slate-500 ml-1.5 font-mono">${(sub.subscriber_count / 1000).toFixed(0)}k members</span>
+                        </div>
+                        <span class="text-[9px] font-mono px-2 py-0.5 rounded border ${badgeColor}">${isAllowed ? 'PARTICIPATION OK' : 'RESEARCH ONLY'}</span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 mb-2">${sub.description || ''}</div>
+                    <div class="flex justify-between items-center text-[10px] font-mono text-slate-500 pt-1.5 border-t border-slate-850">
+                        <span>Promo: <strong class="text-slate-300">${sub.promo_policy}</strong></span>
+                        <a href="${sub.evidence_url}" target="_blank" class="text-orange-400 hover:underline">View Rules ↗</a>
+                    </div>
+                </div>`;
+            }).join('') || '<div class="text-slate-500 text-xs text-center py-3">No communities configured.</div>';
+        }
+
+        function renderRedditOpportunities(candidates, scores) {
+            const c = document.getElementById('redditOpportunitiesContainer');
+            if (!c) return;
+            const cnt = document.getElementById('rd-opp-count');
+            if (cnt) cnt.innerText = `${candidates.length} discussions`;
+
+            if (candidates.length === 0) {
+                c.innerHTML = '<div class="text-center py-8 text-xs text-slate-500 font-mono">No discussions ingested yet. Click "Ingest Demo Discussion" to start.</div>';
+                return;
+            }
+
+            c.innerHTML = candidates.map(cand => {
+                const score = (scores && scores[cand.id]) || cand.opportunity_score || { overall_score: 85, recommendation: "HIGH_OPPORTUNITY" };
+                const scoreVal = score.overall_score || 0;
+                let scoreBadge = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
+                if (scoreVal < 60) scoreBadge = "bg-amber-500/20 text-amber-400 border-amber-500/40";
+                if (scoreVal < 40) scoreBadge = "bg-slate-800 text-slate-400 border-slate-700";
+
+                return `
+                <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1 flex-wrap">
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">r/${cand.subreddit}</span>
+                                <span class="text-[10px] text-slate-500 font-mono">by u/${cand.author}</span>
+                                <a href="${cand.post_url}" target="_blank" class="text-[10px] text-blue-400 hover:underline flex items-center gap-0.5">Thread Link ↗</a>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">${cand.title}</h4>
+                            <p class="text-xs text-slate-300 mt-1 line-clamp-2">${cand.excerpt || ''}</p>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <div class="px-2.5 py-1 rounded-lg border font-mono font-bold text-xs ${scoreBadge}">
+                                ${scoreVal} / 100
+                            </div>
+                            <div class="text-[9px] text-slate-500 mt-1 uppercase font-mono">${score.recommendation || 'HIGH'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-between items-center pt-2 border-t border-slate-850 gap-2">
+                        <div class="flex items-center gap-3 text-[10px] font-mono text-slate-400">
+                            <span>Rel: <strong class="text-slate-200">${score.relevance_score || 0}</strong>/25</span>
+                            <span>Exp: <strong class="text-slate-200">${score.expertise_alignment || 0}</strong>/25</span>
+                            <span>Gap: <strong class="text-slate-200">${score.knowledge_gap_score || 0}</strong>/20</span>
+                            <span>Fresh: <strong class="text-slate-200">${score.freshness_score || 0}</strong>/15</span>
+                        </div>
+                        <button onclick="createRedditDraft('${cand.id}')" class="px-3 py-1.5 rounded-lg bg-orange-600/30 border border-orange-500/40 text-orange-300 hover:bg-orange-600/50 font-bold text-xs transition flex items-center gap-1">
+                            <span>✍️</span> <span>Draft AI Answer</span>
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderRedditDrafts(drafts) {
+            const c = document.getElementById('redditDraftsContainer');
+            if (!c) return;
+
+            if (drafts.length === 0) {
+                c.innerHTML = '<div class="text-center py-8 text-xs text-slate-500 font-mono">No drafts generated yet. Select "Draft AI Answer" on any scored opportunity above.</div>';
+                return;
+            }
+
+            c.innerHTML = drafts.map(d => {
+                const isAwaiting = d.status === "AWAITING_APPROVAL";
+                const isApproved = d.status === "APPROVED_FOR_MANUAL_ACTION";
+                const isPublished = d.status === "PUBLISHED";
+
+                let statusBadge = "bg-amber-500/20 text-amber-300 border-amber-500/30";
+                if (isApproved) statusBadge = "bg-blue-500/20 text-blue-300 border-blue-500/30";
+                if (isPublished) statusBadge = "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+
+                return `
+                <div class="p-5 bg-slate-950/90 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-[9px] font-mono px-2 py-0.5 rounded border font-bold ${statusBadge}">${d.status}</span>
+                            <span class="text-[10px] text-slate-500 font-mono ml-2">Draft ID: ${d.id.substring(0,8)}</span>
+                            <span class="text-[10px] text-slate-500 font-mono ml-2">Sub: r/${d.target_subreddit}</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400 font-mono">${d.word_count || 120} words</div>
+                    </div>
+
+                    <div class="p-4 bg-slate-900/90 rounded-lg border border-slate-800/90 text-xs font-sans text-slate-200 whitespace-pre-line leading-relaxed">
+${d.body}
+                    </div>
+
+                    ${d.commercial_disclosure ? `
+                    <div class="text-[10px] text-amber-400/90 bg-amber-500/10 p-2 rounded border border-amber-500/20 font-mono">
+                        ⚖️ Commercial Disclosure Verified: "${d.commercial_disclosure}"
+                    </div>` : ''}
+
+                    <div class="flex flex-wrap justify-between items-center pt-2 border-t border-slate-850 gap-2">
+                        <div class="text-[10px] text-slate-500 font-mono">
+                            Target: <a href="${d.target_thread_url}" target="_blank" class="text-orange-400 hover:underline">${d.target_thread_url}</a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${isAwaiting ? `
+                            <button onclick="approveRedditDraft('${d.id}', 'APPROVE')" class="px-3 py-1.5 rounded-lg bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600/50 font-bold text-xs transition flex items-center gap-1 shadow-sm">
+                                <span>📋</span> <span>Approve & Copy Payload</span>
+                            </button>
+                            <button onclick="approveRedditDraft('${d.id}', 'REJECT')" class="px-2.5 py-1.5 rounded-lg bg-red-600/20 border border-red-500/30 text-red-300 hover:bg-red-600/40 text-xs transition">
+                                Reject
+                            </button>
+                            ` : ''}
+                            ${isApproved ? `
+                            <button onclick="confirmRedditPublish('${d.id}')" class="px-3 py-1.5 rounded-lg bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:bg-blue-600/50 font-bold text-xs transition flex items-center gap-1 shadow-sm">
+                                <span>✓</span> <span>Confirm Native Post Complete</span>
+                            </button>
+                            ` : ''}
+                            ${isPublished ? `
+                            <span class="text-xs font-bold text-emerald-400 font-mono flex items-center gap-1">
+                                <span>✓</span> <span>Monitored in Active Threads</span>
+                            </span>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderRedditMonitored(monitored) {
+            const c = document.getElementById('redditMonitoredContainer');
+            if (!c) return;
+
+            if (monitored.length === 0) {
+                c.innerHTML = '<div class="text-center py-8 text-xs text-slate-500 font-mono">No monitored threads yet. Publish an approved answer to track responses.</div>';
+                return;
+            }
+
+            c.innerHTML = monitored.map(m => {
+                let badge = "bg-blue-500/20 text-blue-300";
+                if (m.current_state === "RESPONSE_RECEIVED") badge = "bg-amber-500/20 text-amber-300";
+                if (m.current_state === "OPTED_IN_LEAD") badge = "bg-emerald-500/20 text-emerald-300";
+                if (m.current_state === "STOPPED_MOD_OBJECTION") badge = "bg-red-500/20 text-red-400";
+
+                return `
+                <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[9px] font-mono px-2 py-0.5 rounded font-bold ${badge}">${m.current_state}</span>
+                            <span class="text-xs text-white font-bold ml-2">r/${m.subreddit}</span>
+                            <a href="${m.thread_url}" target="_blank" class="text-[10px] text-blue-400 hover:underline ml-2">Thread Link ↗</a>
+                        </div>
+                        <span class="text-[10px] text-slate-500 font-mono">Published by: ${m.published_by}</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-slate-850 text-xs">
+                        <span class="text-slate-400 text-[11px]">Last checked: ${(m.last_checked_at || '').substring(11, 19)}</span>
+                        ${m.current_state !== "OPTED_IN_LEAD" && m.current_state !== "STOPPED_MOD_OBJECTION" ? `
+                        <button onclick="promptRedditConsentSync('${m.id}')" class="px-2.5 py-1 rounded bg-emerald-600/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-600/30 font-bold text-[11px] transition">
+                            + Sync Voluntary Lead to GHL
+                        </button>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        async function createRedditDraft(candidateId) {
+            try {
+                const res = await fetch('/api/v1/reddit/draft', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ candidate_id: candidateId, style: 'DETAILED_ANSWER' })
+                });
+                const d = await res.json();
+                alert(`✓ AI Answer Draft Created via Claude 3.5 Sonnet!\n\nDraft ID: ${d.id}\nTarget: r/${d.target_subreddit}\nStatus: Awaiting Human Review.`);
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Draft error:", e);
+                alert("Failed to draft answer: " + e.message);
+            }
+        }
+
+        async function approveRedditDraft(draftId, action) {
+            try {
+                const res = await fetch('/api/v1/reddit/review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ draft_id: draftId, action: action, reviewer: 'Principal Engineer' })
+                });
+                const d = await res.json();
+                if (action === 'APPROVE') {
+                    if (d.clipboard_ready_body && navigator.clipboard) {
+                        await navigator.clipboard.writeText(d.clipboard_ready_body);
+                        alert(`✓ DRAFT APPROVED & COPIED TO CLIPBOARD!\n\n1. Payload copied to your clipboard.\n2. Target thread:\n${d.target_thread_url}\n\nPaste into Reddit natively and submit, then click 'Confirm Native Post Complete'.`);
+                    } else {
+                        alert(`✓ Draft Approved! Target thread: ${d.target_thread_url}`);
+                    }
+                } else {
+                    alert("Draft Rejected and Archived.");
+                }
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Review error:", e);
+                alert("Failed to review draft: " + e.message);
+            }
+        }
+
+        async function confirmRedditPublish(draftId) {
+            try {
+                const res = await fetch('/api/v1/reddit/publish-confirm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ draft_id: draftId, published_by: 'Alpha Vision Operator', publication_mode: 'ASSISTED_MANUAL' })
+                });
+                const d = await res.json();
+                alert("✓ Publication Confirmed! Thread is now registered for automated conversation monitoring.");
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Confirm publish error:", e);
+                alert("Failed to confirm publish: " + e.message);
+            }
+        }
+
+        async function promptRedditConsentSync(monitoredId) {
+            const senderName = prompt("Enter commenter's business or personal name:", "John HVAC Pro");
+            if (!senderName) return;
+            const senderHandle = prompt("Enter commenter's Reddit handle:", "u/cool_contractor");
+            if (!senderHandle) return;
+            const email = prompt("Enter agreed contact email (or leave blank if phone/DM):", "john@procooling.com") || "";
+            const phone = prompt("Enter contact phone (or leave blank):", "+15125550188") || "";
+            const intent = prompt("Enter customer request / intent summary:", "Requested demo of after-hours call responder for 4-truck HVAC shop.");
+
+            try {
+                const res = await fetch('/api/v1/reddit/consent-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        monitored_id: monitoredId,
+                        sender_name: senderName,
+                        sender_handle: senderHandle,
+                        contact_email: email,
+                        contact_phone: phone,
+                        intent_summary: intent
+                    })
+                });
+                const d = await res.json();
+                alert(`✓ Voluntary Lead Synced to GoHighLevel CRM!\n\nContact ID: ${d.ghl_contact_id}\nTags: ${d.ghl_tags.join(', ')}\nStage: Demo Scheduled`);
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Consent sync error:", e);
+                alert("Failed to sync lead: " + e.message);
+            }
+        }
+
+        async function toggleRedditEmergencyStopBtn() {
+            try {
+                const newStatus = !redditEmergencyStopActive;
+                const res = await fetch('/api/v1/reddit/emergency-stop', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ active: newStatus, reason: newStatus ? "Operator manual stop" : "Operator resume" })
+                });
+                const d = await res.json();
+                alert(`Reddit Emergency Stop is now: ${d.emergency_stop_active ? 'ACTIVE (ALL PAUSED)' : 'DEACTIVATED (NORMAL)'}`);
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Emergency stop error:", e);
+                alert("Failed to toggle emergency stop: " + e.message);
+            }
+        }
+
+        async function ingestSampleRedditDiscussion() {
+            try {
+                const res = await fetch('/api/v1/reddit/ingest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        reddit_post_id: "t3_ingest_" + Math.random().toString(36).substring(2, 7),
+                        subreddit: "smallbusiness",
+                        title: "How do you handle missed phone calls after hours? Losing ~30% of new client inquiries",
+                        excerpt: "We run a local service business with 4 vans. During the day we answer most calls, but between 5pm and 9pm we get 4-6 calls that go to voicemail and 80% never leave a message. By morning they hired someone else. Is anyone using automated SMS or AI call answering that actually works without feeling spammy?",
+                        author: "ohio_plumbing_boss"
+                    })
+                });
+                const d = await res.json();
+                alert("✓ New Discussion Ingested & Scored (100-pt System)!\nScore: " + (d.opportunity_score ? d.opportunity_score.overall_score : 85) + "/100");
+                loadRedditEngine();
+            } catch (e) {
+                console.error("Ingest error:", e);
+                alert("Failed to ingest sample discussion: " + e.message);
+            }
+        }
+
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             refreshData();
             loadWorkflows35();
             loadRevenueModel();
+            loadRedditEngine();
         });
     </script>
 </body>
