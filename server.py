@@ -36,6 +36,8 @@ from engine.whatsapp_cost import whatsapp_cost
 from engine.whatsapp_ghl_sync import whatsapp_ghl_sync
 from engine.whatsapp_webhook import whatsapp_webhook_processor
 from engine.whatsapp_templates import whatsapp_templates, APPROVED_TEMPLATES
+from engine.db_federation import db_federation_service, TenantProvisionRequest
+from engine.engineering_queue import engineering_queue
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("AV-SalesOS")
@@ -71,6 +73,95 @@ def health():
         "environment": config.ENVIRONMENT,
         "kill_switch_active": compliance_gate.emergency_kill_switch_active,
         "timestamp": datetime.utcnow().isoformat()
+    }
+
+# ==============================================================================
+# DATABASE FEDERATION & TENANT PROVISIONING ENDPOINTS (Parts 5, 6, 7)
+# ==============================================================================
+
+@app.get("/api/v1/federation/health")
+def get_federation_health():
+    """Returns connectivity health across Platform Core DB and Veterinary DB."""
+    return db_federation_service.healthcheck_both_databases()
+
+@app.get("/api/v1/tenants")
+def list_tenants(product_id: Optional[str] = None, status: Optional[str] = None):
+    """Lists federated tenants across both products."""
+    return {
+        "count": len(db_federation_service.list_tenants(product_id, status)),
+        "tenants": db_federation_service.list_tenants(product_id, status)
+    }
+
+@app.get("/api/v1/tenants/validate-subdomain/{subdomain}")
+def validate_subdomain(subdomain: str):
+    """Validates subdomain format and availability for the provisioning wizard."""
+    return db_federation_service.validate_subdomain(subdomain)
+
+@app.post("/api/v1/tenants/provision")
+def provision_tenant(req: TenantProvisionRequest):
+    """Executes the complete 8-step SaaS tenant provisioning pipeline."""
+    resp = db_federation_service.provision_tenant(req, actor="SaaS_Command_Center")
+    return resp.model_dump()
+
+@app.post("/api/v1/tenants/{org_id}/suspend")
+async def suspend_tenant(org_id: str, request: Request):
+    """Suspends a tenant safely without destroying database records."""
+    body = {}
+    try:
+        body = await request.json()
+    except Exception:
+        pass
+    reason = body.get("reason", "Administrative action")
+    return db_federation_service.suspend_tenant(org_id, reason=reason, actor="SuperAdmin")
+
+@app.post("/api/v1/tenants/{org_id}/reactivate")
+def reactivate_tenant(org_id: str):
+    """Reactivates a suspended tenant."""
+    return db_federation_service.reactivate_tenant(org_id, actor="SuperAdmin")
+
+@app.get("/api/v1/audit/logs")
+def get_audit_logs(limit: int = 50):
+    """Returns immutable administrative audit logs."""
+    return {
+        "count": len(db_federation_service.get_audit_logs(limit)),
+        "logs": db_federation_service.get_audit_logs(limit)
+    }
+
+# ==============================================================================
+# ENGINEERING REQUEST CENTER (Part 19 - Connect Antigravity to Admin App)
+# ==============================================================================
+
+class EngineeringTaskSubmit(BaseModel):
+    title: str
+    description: str
+    category: str = "GENERAL"
+    priority: str = "P2_MEDIUM"
+    submitted_by: str = "Founder"
+    target_repo: Optional[str] = "Alpha Auto Sales"
+
+@app.post("/api/v1/engineering/request")
+def submit_engineering_task(req: EngineeringTaskSubmit):
+    """Allows nontechnical founder to request code changes or features directly from Command Center."""
+    task = engineering_queue.submit_task(
+        title=req.title,
+        description=req.description,
+        category=req.category,
+        priority=req.priority,
+        submitted_by=req.submitted_by,
+        target_repo=req.target_repo
+    )
+    return {
+        "success": True,
+        "message": f"Task {task.task_id} successfully queued for Antigravity AI Engine.",
+        "task": task.model_dump()
+    }
+
+@app.get("/api/v1/engineering/tasks")
+def list_engineering_tasks(status: Optional[str] = None, category: Optional[str] = None):
+    """Lists tracked engineering and development tasks."""
+    return {
+        "count": len(engineering_queue.list_tasks(status, category)),
+        "tasks": engineering_queue.list_tasks(status, category)
     }
 
 @app.get("/api/v1/metrics")

@@ -16,8 +16,17 @@ from server import (
     get_commercial_workflows,
     run_commercial_cycle,
     get_commercial_telemetry,
-    get_financial_model
+    get_financial_model,
+    get_federation_health,
+    list_tenants,
+    validate_subdomain,
+    provision_tenant,
+    get_audit_logs,
+    submit_engineering_task,
+    list_engineering_tasks,
+    EngineeringTaskSubmit
 )
+from engine.db_federation import TenantProvisionRequest
 
 def test_endpoint_health():
     res = health()
@@ -102,3 +111,56 @@ def test_endpoint_financial_model():
     assert model["target_net_profit_monthly_usd"] == 50000.0
     assert model["scenarios"]["base_case"]["net_operating_profit_usd"] == 50000.0
     assert model["hvac_roi_benchmark"]["roi_multiple"] > 10.0
+
+def test_endpoint_federation_health():
+    res = get_federation_health()
+    assert res["overall_status"] == "HEALTHY"
+    assert "core_db" in res["databases"]
+    assert "vet_db" in res["databases"]
+
+def test_endpoint_list_tenants():
+    res = list_tenants()
+    assert res["count"] >= 4
+    assert len(res["tenants"]) >= 4
+
+def test_endpoint_validate_subdomain():
+    valid_res = validate_subdomain("new-clinic-alpha")
+    assert valid_res["valid"] is True
+    
+    reserved_res = validate_subdomain("admin")
+    assert reserved_res["valid"] is False
+
+def test_endpoint_provision_tenant():
+    req = TenantProvisionRequest(
+        business_name="Austin Precision HVAC",
+        product_id="service_business_os",
+        plan_id="service_growth",
+        target_subdomain="austinprecisionhvac",
+        owner_name="Dave Miller",
+        owner_email="dave@austinprecisionhvac.com",
+        owner_phone="+15125550999"
+    )
+    res = provision_tenant(req)
+    assert res["success"] is True
+    assert res["subdomain"] == "austinprecisionhvac"
+    assert res["status"] == "ACTIVE"
+
+def test_endpoint_audit_logs():
+    res = get_audit_logs()
+    assert res["count"] >= 1
+    assert "logs" in res
+
+def test_endpoint_engineering_tasks():
+    req = EngineeringTaskSubmit(
+        title="Verify Stripe production webhook signature parsing",
+        description="Verify handling of test and live signatures.",
+        category="INTEGRATION",
+        priority="P1_HIGH"
+    )
+    res = submit_engineering_task(req)
+    assert res["success"] is True
+    assert res["task"]["title"] == "Verify Stripe production webhook signature parsing"
+    
+    tasks = list_engineering_tasks()
+    assert tasks["count"] >= 1
+
