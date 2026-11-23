@@ -1,0 +1,113 @@
+{
+  "name": "WA-01 | Meta WhatsApp Inbound Receiver & Normalizer",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "wa-incoming",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "id": "wa01-webhook-trigger",
+      "name": "Meta Webhook Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $input.item.json.body || $input.item.json;\nif (payload.object !== 'whatsapp_business_account') {\n  return [];\n}\n\nconst normalized = [];\nconst entries = payload.entry || [];\nfor (const entry of entries) {\n  for (const change of (entry.changes || [])) {\n    const val = change.value || {};\n    const metadata = val.metadata || {};\n    const contacts = val.contacts || [];\n    const contactName = contacts.length > 0 ? (contacts[0].profile ? contacts[0].profile.name : 'Lead') : 'Lead';\n    const messages = val.messages || [];\n    \n    for (const msg of messages) {\n      let textBody = '';\n      if (msg.type === 'text') {\n        textBody = msg.text ? msg.text.body : '';\n      } else if (msg.type === 'button') {\n        textBody = msg.button ? msg.button.text : '';\n      } else if (msg.type === 'interactive') {\n        textBody = msg.interactive?.button_reply?.title || '';\n      } else {\n        textBody = `[${msg.type.toUpperCase()}]`;\n      }\n      \n      normalized.push({\n        json: {\n          provider: 'meta_whatsapp',\n          event_type: 'message_received',\n          business_phone_id: metadata.phone_number_id,\n          meta_message_id: msg.id,\n          wa_id: msg.from,\n          contact_name: contactName,\n          message_type: msg.type,\n          message_text: textBody,\n          received_at: new Date(parseInt(msg.timestamp) * 1000).toISOString(),\n          is_opt_out: /\\b(stop|cancel|unsubscribe|parar|baja|no\\s*mas)\\b/i.test(textBody),\n          is_human_request: /\\b(human|humano|persona|asesor|soporte|agent)\\b/i.test(textBody)\n        }\n      });\n    }\n  }\n}\nreturn normalized;"
+      },
+      "id": "wa01-normalize-code",
+      "name": "Normalize & Inspect Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.is_opt_out }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "wa01-optout-check",
+      "name": "Is Opt Out?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://djtejmrzxfkctbvpdkbg.supabase.co/rest/v1/sales_conversations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqdGVqbXJ6eGZrY3RidnBka2JnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5NTE4MDk5OCwiZXhwIjoyMTEwNzU2OTk4fQ.1uowezLItuMCBZX5hT1J55uFggi-R7fPWuDjbXeebY8"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqdGVqbXJ6eGZrY3RidnBka2JnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5NTE4MDk5OCwiZXhwIjoyMTEwNzU2OTk4fQ.1uowezLItuMCBZX5hT1J55uFggi-R7fPWuDjbXeebY8"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ channel: 'whatsapp', role: 'user', subject: 'Inbound WhatsApp ' + $json.wa_id, content: $json.message_text }) }}"
+      },
+      "id": "wa01-supabase-persist",
+      "name": "Persist to Supabase Sales Conversations",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 240]
+    }
+  ],
+  "connections": {
+    "Meta Webhook Inbound": {
+      "main": [
+        [
+          {
+            "node": "Normalize & Inspect Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize & Inspect Message": {
+      "main": [
+        [
+          {
+            "node": "Is Opt Out?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Opt Out?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Persist to Supabase Sales Conversations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

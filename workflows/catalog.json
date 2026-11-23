@@ -1,0 +1,99 @@
+{
+  "system": "Alpha Vision AI Sales OS",
+  "version": "2.5.0",
+  "workflow_count": 50,
+  "clusters": [
+    {
+      "category": "Discovery",
+      "range": "WF-001 to WF-007",
+      "workflows": [
+        {"id": "WF-001", "name": "Campaign Start", "trigger": "Manual / Cron", "purpose": "Validates campaign configuration, market compliance, and target ICP."},
+        {"id": "WF-002", "name": "Prospect Source Import", "trigger": "Webhook / CSV", "purpose": "Imports permitted B2B prospects from authorized directories."},
+        {"id": "WF-003", "name": "Prospect Research", "trigger": "Event / Queue", "purpose": "Executes public website crawl and gathers evidence quotes."},
+        {"id": "WF-004", "name": "Contact Verification", "trigger": "Sub-workflow", "purpose": "Validates business email, phone, and website domain existence."},
+        {"id": "WF-005", "name": "Deduplication", "trigger": "Pre-Save Hook", "purpose": "Normalizes domains, emails, and phones to prevent duplicate contact."},
+        {"id": "WF-006", "name": "Lead Qualification", "trigger": "Queue Worker", "purpose": "Computes deterministic 100-point score across 6 categories."},
+        {"id": "WF-007", "name": "Compliance Eligibility", "trigger": "Pre-Dispatch Gate", "purpose": "Verifies CAN-SPAM, CASL, GDPR, TCPA, and suppression list."}
+      ]
+    },
+    {
+      "category": "Outreach",
+      "range": "WF-008 to WF-015",
+      "workflows": [
+        {"id": "WF-008", "name": "Message Personalization", "trigger": "Queue Worker", "purpose": "Calls Claude to generate consultative, factual outreach copy."},
+        {"id": "WF-009", "name": "Message Quality Control", "trigger": "Post-Gen Hook", "purpose": "Lints for spam phrases, verifies cited quotes, and checks opt-out notice."},
+        {"id": "WF-010", "name": "Outbound Dispatch", "trigger": "Operator Approval", "purpose": "Dispatches approved messages via Smartlead/GHL/WhatsApp."},
+        {"id": "WF-011", "name": "Outbound Event Processing", "trigger": "Webhook Listener", "purpose": "Processes delivery, open, bounce, and complaint events."},
+        {"id": "WF-012", "name": "Reply Classification", "trigger": "Inbound Webhook", "purpose": "Classifies responses via Claude Haiku and updates CRM."},
+        {"id": "WF-013", "name": "Interested Lead Routing", "trigger": "Intent Event", "purpose": "Routes interested prospects to AI sales consultant or demo."},
+        {"id": "WF-014", "name": "Follow-Up Scheduling", "trigger": "Timer / Cron", "purpose": "Schedules compliant, adaptive follow-ups up to 3 touches max."},
+        {"id": "WF-015", "name": "Follow-Up Cancellation", "trigger": "Stop Event", "purpose": "Cancels follow-ups on reply, demo click, purchase, or opt-out."}
+      ]
+    },
+    {
+      "category": "Demonstration",
+      "range": "WF-016 to WF-023",
+      "workflows": [
+        {"id": "WF-016", "name": "Demo Invitation", "trigger": "Sales Action", "purpose": "Issues signed, expiring demo link with encoded scenario."},
+        {"id": "WF-017", "name": "Demo Provisioning", "trigger": "Link Clicked", "purpose": "Allocates isolated ephemeral sandbox with synthetic data."},
+        {"id": "WF-018", "name": "Demo Personalization", "trigger": "Session Start", "purpose": "Loads industry-appropriate scenarios (Vet Day or HVAC emergency)."},
+        {"id": "WF-019", "name": "Demo Session Start", "trigger": "Web Event", "purpose": "Records session open, updates GHL CRM stage to 'Demo Started'."},
+        {"id": "WF-020", "name": "Demo Interaction Events", "trigger": "Frontend Telemetry", "purpose": "Tracks explored modules (GPS map, time-clock, prescriptions)."},
+        {"id": "WF-021", "name": "Demo Completion", "trigger": "Tour Finish", "purpose": "Records successful tour completion and advances CRM stage."},
+        {"id": "WF-022", "name": "Demo Follow-Up", "trigger": "Timer (2h post-demo)", "purpose": "Dispatches contextual summary of explored features and trial offer."},
+        {"id": "WF-023", "name": "Demo Expiration & Cleanup", "trigger": "Cron (Daily)", "purpose": "Revokes expired demo tokens and recycles sandbox memory."}
+      ]
+    },
+    {
+      "category": "Trial",
+      "range": "WF-024 to WF-028",
+      "workflows": [
+        {"id": "WF-024", "name": "Trial Registration", "trigger": "Form / Button", "purpose": "Validates trial eligibility and records prospect business details."},
+        {"id": "WF-025", "name": "Trial License Provisioning", "trigger": "Registration Verified", "purpose": "Issues 14/30-day trial license token in Supabase."},
+        {"id": "WF-026", "name": "Trial Activation Guidance", "trigger": "Account Ready", "purpose": "Delivers mobile PWA install guide and 3 quick-start milestones."},
+        {"id": "WF-027", "name": "Trial Milestone Evaluation", "trigger": "Daily Cron", "purpose": "Monitors customer feature usage and offers proactive help."},
+        {"id": "WF-028", "name": "Trial Expiration Management", "trigger": "Timer (Day 12/28)", "purpose": "Sends transparent renewal terms and upgrade links before expiry."}
+      ]
+    },
+    {
+      "category": "Revenue",
+      "range": "WF-029 to WF-035",
+      "workflows": [
+        {"id": "WF-029", "name": "Checkout Started", "trigger": "Button Click", "purpose": "Creates secure Stripe/Wompi checkout session and records deal intent."},
+        {"id": "WF-030", "name": "Payment Verification", "trigger": "Provider Webhook", "purpose": "Authenticates authoritative payment signatures and cleared funds."},
+        {"id": "WF-031", "name": "Paid License Provisioning", "trigger": "Payment Succeeded", "purpose": "Provisions active multi-tenant license with purchased seats."},
+        {"id": "WF-032", "name": "GHL Closed-Won Sync", "trigger": "License Active", "purpose": "Advances GHL Opportunity to 'Closed Won' and creates sub-account."},
+        {"id": "WF-033", "name": "Failed Provisioning Recovery", "trigger": "Error Catch", "purpose": "Safely retries provisioning and alerts engineering on fault."},
+        {"id": "WF-034", "name": "Subscription Renewal", "trigger": "Invoice Paid", "purpose": "Extends license expiration date upon recurring subscription renewal."},
+        {"id": "WF-035", "name": "Payment Failure Handling", "trigger": "Charge Failed", "purpose": "Initiates 3-step polite dunning sequence and enters grace period."}
+      ]
+    },
+    {
+      "category": "Onboarding",
+      "range": "WF-036 to WF-042",
+      "workflows": [
+        {"id": "WF-036", "name": "Customer Welcome", "trigger": "Payment Confirmed", "purpose": "Presents post-purchase welcome portal and onboarding booking."},
+        {"id": "WF-037", "name": "Onboarding Questionnaire", "trigger": "Intake Submit", "purpose": "Collects software, scheduling, and staff migration requirements."},
+        {"id": "WF-038", "name": "Onboarding Booking", "trigger": "GHL Calendar Webhook", "purpose": "Syncs 50-minute personal implementation session on team calendar."},
+        {"id": "WF-039", "name": "Onboarding Reminder", "trigger": "Cron (24h/1h pre-call)", "purpose": "Sends meeting link and preparation checklist to customer."},
+        {"id": "WF-040", "name": "AI Onboarding Brief", "trigger": "Pre-Meeting Trigger", "purpose": "Generates executive customer intelligence briefing for the engineer."},
+        {"id": "WF-041", "name": "Onboarding Completion", "trigger": "Engineer Sign-off", "purpose": "Records verified configuration, sample tests, and live status."},
+        {"id": "WF-042", "name": "Customer Success Handoff", "trigger": "Go-Live Complete", "purpose": "Enrolls account into adoption tracking and retention milestones."}
+      ]
+    },
+    {
+      "category": "Operations",
+      "range": "WF-043 to WF-050",
+      "workflows": [
+        {"id": "WF-043", "name": "Global Suppression Sync", "trigger": "Opt-out / DNC", "purpose": "Synchronizes suppressed contacts across GHL, n8n, and Supabase."},
+        {"id": "WF-044", "name": "Integration Health Monitor", "trigger": "Cron (Every 5m)", "purpose": "Heartbeat probe of Supabase, GHL, WhatsApp, and n8n webhooks."},
+        {"id": "WF-045", "name": "Workflow Failure Monitor", "trigger": "Dead-Letter Queue", "purpose": "Captures failed steps, logs stack traces, and triggers retry."},
+        {"id": "WF-046", "name": "Data Reconciliation", "trigger": "Cron (Hourly)", "purpose": "Reconciles Supabase licenses with GHL contacts and Stripe events."},
+        {"id": "WF-047", "name": "Analytics Aggregation", "trigger": "Cron (Nightly)", "purpose": "Calculates daily conversion funnels, CAC, and channel attribution."},
+        {"id": "WF-048", "name": "Daily Executive Summary", "trigger": "Cron (8:00 AM)", "purpose": "Sends executive report: cash collected, active clients, and alerts."},
+        {"id": "WF-049", "name": "Agent Cost Monitor", "trigger": "LLM Call Hook", "purpose": "Tracks Anthropic token spend and alerts if cost ceiling approached."},
+        {"id": "WF-050", "name": "Campaign Safety Kill Switch", "trigger": "Manual / Alert", "purpose": "Instantly halts all outbound messaging on anomaly or admin trigger."}
+      ]
+    }
+  ]
+}

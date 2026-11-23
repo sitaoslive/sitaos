@@ -1,0 +1,34 @@
+# Environment and Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.cert
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.venv/
+env/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Scratch and OS
+scratch/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,71 @@
+{
+  "name": "WA-05 | GHL Appointment & Sales Event WhatsApp Listener",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "wa-ghl-events"
+      },
+      "id": "wa05-ghl-webhook",
+      "name": "GHL Event Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.type || $json.body.event }}",
+              "value2": "Appointment"
+            }
+          ]
+        }
+      },
+      "id": "wa05-event-filter",
+      "name": "Is Appointment Event?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [320, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://alphavision.app.n8n.cloud/webhook/wa-dispatch",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  to: $node['GHL Event Webhook'].json.body.phone,\n  message_type: 'template',\n  template_name: 'avm_onboarding_reminder_v1',\n  language: 'es',\n  components: [\n    {\n      type: 'body',\n      parameters: [\n        { type: 'text', text: $node['GHL Event Webhook'].json.body.first_name || 'Estimado cliente' },\n        { type: 'text', text: $node['GHL Event Webhook'].json.body.appointment_date || 'la fecha acordada' },\n        { type: 'text', text: $node['GHL Event Webhook'].json.body.appointment_time || 'la hora acordada' },\n        { type: 'text', text: 'https://meet.google.com/alpha-vision-onboard' }\n      ]\n    }\n  ]\n}) }}"
+      },
+      "id": "wa05-trigger-dispatch",
+      "name": "Trigger WA-03 Onboarding Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [560, 160]
+    }
+  ],
+  "connections": {
+    "GHL Event Webhook": {
+      "main": [
+        [
+          {
+            "node": "Is Appointment Event?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Appointment Event?": {
+      "main": [
+        [
+          {
+            "node": "Trigger WA-03 Onboarding Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "name": "WA-03 | Centralized Outbound WhatsApp Dispatcher",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "wa-dispatch",
+        "responseMode": "responseNode"
+      },
+      "id": "wa03-webhook-trigger",
+      "name": "Dispatch Request Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.message_type || 'text' }}",
+              "value2": "template"
+            }
+          ]
+        }
+      },
+      "id": "wa03-type-check",
+      "name": "Is Template?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [320, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.META_PHONE_NUMBER_ID }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.META_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  messaging_product: 'whatsapp',\n  recipient_type: 'individual',\n  to: $node['Dispatch Request Webhook'].json.body.to,\n  type: 'template',\n  template: {\n    name: $node['Dispatch Request Webhook'].json.body.template_name,\n    language: { code: $node['Dispatch Request Webhook'].json.body.language || 'es' },\n    components: $node['Dispatch Request Webhook'].json.body.components || []\n  }\n}) }}"
+      },
+      "id": "wa03-send-template",
+      "name": "Send Meta Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [560, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.META_PHONE_NUMBER_ID }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.META_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  messaging_product: 'whatsapp',\n  recipient_type: 'individual',\n  to: $node['Dispatch Request Webhook'].json.body.to,\n  type: 'text',\n  text: { preview_url: false, body: $node['Dispatch Request Webhook'].json.body.text }\n}) }}"
+      },
+      "id": "wa03-send-text",
+      "name": "Send Free-Form Text (24h Window)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [560, 280]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, meta_response: $json }) }}"
+      },
+      "id": "wa03-respond-caller",
+      "name": "Respond to Caller",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [800, 200]
+    }
+  ],
+  "connections": {
+    "Dispatch Request Webhook": {
+      "main": [
+        [
+          {
+            "node": "Is Template?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Template?": {
+      "main": [
+        [
+          {
+            "node": "Send Meta Template",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Free-Form Text (24h Window)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Meta Template": {
+      "main": [
+        [
+          {
+            "node": "Respond to Caller",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Free-Form Text (24h Window)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Caller",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

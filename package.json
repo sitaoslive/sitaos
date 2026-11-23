@@ -1,0 +1,25 @@
+{
+  "name": "alpha-vision-ai-sales-os",
+  "version": "2.5.0",
+  "description": "Autonomous Multi-Product Sales, Interactive Demonstration, CRM, Conversion, Licensing and Customer Onboarding Platform",
+  "author": "Alpha Vision Method",
+  "license": "PROPRIETARY",
+  "main": "server.py",
+  "scripts": {
+    "start": "python server.py",
+    "test": "pytest tests/test_suite.py -v",
+    "test:salesaios": "pnpm --prefix ../salesaios test",
+    "test:contractors": "node --test ../Contractorsapp/tests/**/*.test.js",
+    "test:luisvet": "node ../Luisvet/tests/test_suite_complete.js",
+    "test:all": "pytest tests/test_suite.py -v && node --test ../Contractorsapp/tests/**/*.test.js && node ../Luisvet/tests/test_suite_complete.js"
+  },
+  "keywords": [
+    "ai-sales-os",
+    "autonomous-revenue",
+    "gohighlevel",
+    "n8n",
+    "claude-api",
+    "interactive-demos",
+    "saas-onboarding"
+  ]
+}

@@ -1,0 +1,10 @@
+Process_Category,Workflow_Range,Current_Autonomy,Target_Autonomy,Human_Involvement_Condition,Improvement_Action
+Lead Discovery & Research,WF-001 to WF-005,A3,A4,None during normal discovery; manual list uploads optional,Automate verified directory crawling
+Outreach & Dispatch,WF-006 to WF-010,A4,A4,None; strict deterministic policy blocks unpermitted sends,Continuous email deliverability monitoring
+Inbound Reply & Sales Conversations,WF-011 to WF-014,A3,A4,Customer requests human or triggers out-of-scope question,Human takeover tag in GHL locks automation
+Booking & Consultation,WF-015 to WF-017,A4,A4,Exclusive calendar conflict or custom pricing request,Auto-suggest next available slot
+Checkout & Provisioning,WF-018 to WF-021,A4,A4,Payment chargeback or invalid business address,Idempotent webhook provisioning saga
+Post-Purchase Implementation,WF-019 to WF-020,A2,A2,Intentional 1-on-1 implementation & setup call (45-60 min),AI Specialist Briefing prepares call dossier
+Billing Renewals & Support,WF-022 to WF-025,A3,A4,Customer cancellation or unresolvable technical bug,Automated card retry with dunning email
+Attribution & Reporting,WF-026 to WF-030,A4,A4,None; deterministic ledger calculations,Real-time metrics on Executive Command Center
+System Telemetry & Self-Healing,WF-031 to WF-035,A4,A4,Unrecoverable credential expiration or cloud outage,Automatic backoff and dead-letter queueing
