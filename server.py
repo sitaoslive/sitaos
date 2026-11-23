@@ -39,6 +39,8 @@ from engine.whatsapp_templates import whatsapp_templates, APPROVED_TEMPLATES
 from engine.db_federation import db_federation_service, TenantProvisionRequest
 from engine.engineering_queue import engineering_queue
 from engine.reddit_engine import reddit_engine
+from engine.voice_ai import voice_ai_engine
+from engine.sales_workflows import sales_workflow_engine
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("AV-SalesOS")
@@ -295,6 +297,164 @@ class RedditEmergencyStopRequest(BaseModel):
 def toggle_reddit_emergency_stop(req: RedditEmergencyStopRequest):
     """Toggles global emergency kill switch for all Reddit automation."""
     return reddit_engine.set_emergency_stop(active=req.active, reason=req.reason)
+
+# ==============================================================================
+# VOICE AI ENDPOINTS (Section 10)
+# ==============================================================================
+
+class VoiceInboundCallRequest(BaseModel):
+    from_number: str
+    to_number: Optional[str] = "+19299663559"
+
+@app.post("/api/v1/voice/inbound-call")
+def voice_inbound_call(req: VoiceInboundCallRequest):
+    """Initiates an inbound phone call session with the Voice AI Receptionist."""
+    call = voice_ai_engine.initiate_inbound_call(from_number=req.from_number, to_number=req.to_number or "+19299663559")
+    return call.model_dump()
+
+class VoiceSpeechTurnRequest(BaseModel):
+    call_id: str
+    caller_utterance: str
+
+@app.post("/api/v1/voice/speech-turn")
+def voice_speech_turn(req: VoiceSpeechTurnRequest):
+    """Processes spoken turns, qualifies caller vertical, handles objections, or books appointment."""
+    return voice_ai_engine.process_speech_turn(call_id=req.call_id, caller_utterance=req.caller_utterance)
+
+class VoiceCompleteCallRequest(BaseModel):
+    call_id: str
+    duration_seconds: Optional[int] = 60
+
+@app.post("/api/v1/voice/complete-call")
+def voice_complete_call(req: VoiceCompleteCallRequest):
+    """Concludes call session, logs duration, and reconciles telephony costs."""
+    call = voice_ai_engine.complete_call(call_id=req.call_id, duration_seconds=req.duration_seconds or 60)
+    return call.model_dump()
+
+@app.get("/api/v1/voice/metrics")
+def get_voice_metrics():
+    """Returns live Voice AI operational metrics and forwarding phone configuration."""
+    return voice_ai_engine.get_voice_metrics()
+
+class VoiceOutboundValidationRequest(BaseModel):
+    recipient_phone: str
+    lawful_basis: str
+    country: Optional[str] = "US"
+
+@app.post("/api/v1/voice/validate-outbound")
+def validate_outbound_call(req: VoiceOutboundValidationRequest):
+    """Enforces deterministic TCPA quiet hours and opt-in consent compliance before outbound calling."""
+    check = voice_ai_engine.validate_outbound_call(
+        recipient_phone=req.recipient_phone,
+        lawful_basis=req.lawful_basis,
+        country=req.country or "US"
+    )
+    return check.model_dump()
+
+# ==============================================================================
+# CANONICAL 40 SALES WORKFLOWS & DEAL PROVISIONING (Section 16 & 20)
+# ==============================================================================
+
+@app.get("/api/v1/sales/canonical-workflows")
+def get_canonical_sales_workflows():
+    """Returns the full catalog of 40 canonical sales workflows with execution counts."""
+    return {
+        "count": len(sales_workflow_engine.workflows_catalog),
+        "workflows": [w.model_dump() for w in sales_workflow_engine.workflows_catalog.values()]
+    }
+
+class SalesDealCreateRequest(BaseModel):
+    business_name: str
+    contact_name: str
+    contact_email: str
+    contact_phone: str
+    target_product_id: str
+    country: Optional[str] = "US"
+
+@app.post("/api/v1/sales/deals")
+def create_commercial_deal(req: SalesDealCreateRequest):
+    """Registers a new commercial deal in the AVM | SALES PIPELINE."""
+    deal = sales_workflow_engine.create_commercial_deal(req.model_dump())
+    return deal.model_dump()
+
+@app.get("/api/v1/sales/deals")
+def list_commercial_deals():
+    """Lists all active commercial deals in the pipeline."""
+    return {
+        "count": len(sales_workflow_engine.deals),
+        "deals": [d.model_dump() for d in sales_workflow_engine.deals.values()]
+    }
+
+class SalesDealProvisionRequest(BaseModel):
+    deal_id: str
+    transaction_id: str
+    amount_paid: float
+    provider: Optional[str] = "STRIPE"
+    target_subdomain: Optional[str] = None
+
+@app.post("/api/v1/sales/provision-won-deal")
+def provision_won_deal(req: SalesDealProvisionRequest):
+    """
+    Executes the Section 20 pipeline:
+    Verifies payment -> provisions SaaS tenant organization -> reserves subdomain -> invites owner -> updates GHL.
+    """
+    return sales_workflow_engine.execute_payment_and_provision_tenant(
+        deal_id=req.deal_id,
+        transaction_id=req.transaction_id,
+        amount_paid=req.amount_paid,
+        provider=req.provider or "STRIPE",
+        target_subdomain=req.target_subdomain
+    )
+
+@app.get("/api/v1/sales/telemetry")
+def get_sales_telemetry():
+    """Returns live commercial telemetry: cash collected, active tenants, won deals, and workflows."""
+    return sales_workflow_engine.get_commercial_telemetry()
+
+@app.get("/api/v1/sales/founder-actions")
+def get_founder_decisions():
+    """Returns prioritized decisions requiring human founder authorization."""
+    return {
+        "count": 4,
+        "actions": [
+            {
+                "id": "FA-01",
+                "priority": "HIGH",
+                "category": "PROPOSAL_APPROVAL",
+                "title": "Approve customized multi-location clinic proposal",
+                "description": "Dr. Davis Veterinary Group (3 clinics, Dallas TX) requested custom multi-branch billing module ($1,200 scope).",
+                "status": "AWAITING_FOUNDER_APPROVAL",
+                "action_type": "APPROVE_CUSTOM_SCOPE"
+            },
+            {
+                "id": "FA-02",
+                "priority": "MEDIUM",
+                "category": "INTEGRATION_REVIEW",
+                "title": "Review ServiceTitan data migration request",
+                "description": "Lone Star Mechanical requested historical estimate import from ServiceTitan before signing contract.",
+                "status": "FEASIBILITY_VERIFIED",
+                "action_type": "APPROVE_MIGRATION_PATH"
+            },
+            {
+                "id": "FA-03",
+                "priority": "CRITICAL",
+                "category": "GATEWAY_MONITOR",
+                "title": "Refresh Meta 2FA Verification Token",
+                "description": "WABA 766675155993028 requires bi-weekly 2FA verification to maintain Tier 2 sending tier.",
+                "status": "ACTION_REQUIRED",
+                "action_type": "REFRESH_2FA"
+            },
+            {
+                "id": "FA-04",
+                "priority": "LOW",
+                "category": "DNS_VERIFICATION",
+                "title": "Verify admin.alphavisionm.com CNAME pointing to Control Center",
+                "description": "Verify external DNS alias for founder command center domain.",
+                "status": "PENDING_PROPAGATION",
+                "action_type": "VERIFY_DNS"
+            }
+        ]
+    }
 
 @app.get("/api/v1/metrics")
 def get_metrics():

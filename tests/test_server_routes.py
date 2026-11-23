@@ -63,7 +63,7 @@ def test_endpoint_prospects():
 
 def test_endpoint_agents():
     res = get_agents()
-    assert len(res["agents"]) == 14
+    assert len(res["agents"]) == 16
 
 def test_endpoint_pipeline():
     res = get_pipeline()
