@@ -110,6 +110,24 @@ def test_render_academy_html():
     assert "Module 1: What We Sell" in html
     assert "Live System Health & Error Inspector" in html
 
+def test_endpoint_business_diagnosis_inquiry():
+    from server import submit_business_diagnosis_inquiry, BusinessDiagnosisInquiryRequest
+    req = BusinessDiagnosisInquiryRequest(
+        business_name="Bayside Premier Dental",
+        contact_name="Dr. Julian Ross",
+        email="dr.ross@baysidedental.com",
+        phone="+13055550888",
+        vertical="dental",
+        city="Miami",
+        estimated_missed_calls=25,
+        current_software="Dentrix"
+    )
+    res = submit_business_diagnosis_inquiry(req)
+    assert res["success"] is True
+    assert res["calendar_id"] == "2Btd7kd9NkVtIWA9glW4"
+    assert "https://alphavisionmethod.com/vsl" in res["funnel_url"]
+    assert "dental" in res["speed_to_lead_draft"]["subject"].lower() or "patient" in res["speed_to_lead_draft"]["subject"].lower()
+
 def test_endpoint_commercial_workflows():
     res = get_commercial_workflows()
     assert res["total_workflows"] == 35

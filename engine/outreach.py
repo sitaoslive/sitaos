@@ -59,7 +59,36 @@ class OutreachEngine:
 
         draft_id = f"draft_{prospect_id[:8]}"
 
-        if product_id == "vet_freedom_os" or country in ["CO", "MX", "ES", "CL"]:
+        if product_id == "alpha_vision_diagnosis" or prospect.get("vertical") in ["dental", "real_estate", "medspa", "service_business"]:
+            # Universal Service Business Systems Diagnosis (alphavisionmethod.com offer)
+            vertical = prospect.get("vertical", "service_business")
+            if vertical == "dental":
+                subject = f"Quick question about after-hours patient inquiries at {business_name}"
+                hook = "how your clinic captures after-hours patient inquiries and automates hygiene recall without burning out your front desk"
+            elif vertical == "real_estate":
+                subject = f"Quick question about after-hours buyer lead speed at {business_name}"
+                hook = "how your team connects with online buyer inquiries in under 45 seconds and books listing consultations automatically"
+            else:
+                subject = f"Quick question regarding operations and lead capture at {business_name}"
+                hook = "how top service businesses eliminate lead bleed, answer emergency calls in 2 rings, and automate booking"
+
+            diag_url = "https://alphavisionmethod.com/vsl"
+            body = (
+                f"Hi {dm_name},\n\n"
+                f"While reviewing service leaders in {city}, I came across {business_name}.\n\n"
+                f"We help high-ticket service business owners install an Autonomous Revenue & Operations Engine. "
+                f"We put together a private, 5-minute video walkthrough showing {hook}:\n"
+                f"👉 {diag_url}\n\n"
+                f"You can also run a complimentary 10-point Business Systems Diagnosis here to see exactly where your operation is losing revenue.\n\n"
+                f"Would you be open to checking out the diagnosis walkthrough?\n\n"
+                f"Best regards,\n"
+                f"Freud & The Alpha Vision Team\n"
+                f"Alpha Vision Method · Business Systems & Diagnosis (alphavisionmethod.com)\n\n"
+                f"---\n"
+                f"If you'd rather not receive systems optimization ideas for {business_name}, reply 'unsubscribe' or 'opt-out' and we will remove your address immediately."
+            )
+            language = "en"
+        elif product_id == "vet_freedom_os" or country in ["CO", "MX", "ES", "CL"]:
             # Spanish Veterinary / Latin America template
             obs_mention = f"Noté que trabajan con atención a domicilio en {city}."
             if cited_obs:

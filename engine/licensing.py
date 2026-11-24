@@ -178,6 +178,72 @@ PRODUCTS_CATALOG: Dict[str, Dict[str, Any]] = {
                 ]
             }
         }
+    },
+    "alpha_vision_diagnosis": {
+        "id": "alpha_vision_diagnosis",
+        "name": "Alpha Vision Systems Diagnosis & Clarity Offer",
+        "category": "Universal Service Business Systems Diagnosis & Autonomous Revenue Architecture",
+        "readiness_status": "SALES_READY",
+        "supported_countries": ["US", "CO", "MX", "CA", "ES"],
+        "supported_languages": ["en", "es"],
+        "base_url": "https://alphavisionmethod.com",
+        "funnel_url": "https://alphavisionmethod.com/vsl",
+        "booking_calendar_id": "2Btd7kd9NkVtIWA9glW4",
+        "target_verticals": [
+            "veterinary",
+            "contractor",
+            "dental",
+            "real_estate",
+            "medspa",
+            "professional_services"
+        ],
+        "trial_policy": {
+            "default_duration_days": 30,
+            "requires_credit_card": False,
+            "instant_activation": True
+        },
+        "plans": {
+            "growth_architecture": {
+                "id": "growth_architecture",
+                "name": "Autonomous Systems Architecture Plan",
+                "description": "Full GoHighLevel CRM setup, 24/7 AI Receptionist, WhatsApp recall engine, and calendar bookings.",
+                "seats_included": 10,
+                "trial_days": 14,
+                "setup_fee_usd": 1500,
+                "pricing": {
+                    "US": {"currency": "USD", "monthly": 497, "annual": 4970},
+                    "CO": {"currency": "COP", "monthly": 1950000, "annual": 19500000}
+                },
+                "entitlements": [
+                    "business_systems_diagnosis",
+                    "speed_to_lead_automation",
+                    "voice_ai_receptionist",
+                    "whatsapp_cloud_api",
+                    "ghl_pipeline_architecture",
+                    "no_show_recovery_engine",
+                    "custom_client_portal"
+                ]
+            },
+            "enterprise_scale": {
+                "id": "enterprise_scale",
+                "name": "Enterprise Autonomous Revenue OS",
+                "description": "Complete bespoke systems automation, multi-location call center, dedicated agent workforce, and white-glove onboarding.",
+                "seats_included": 50,
+                "trial_days": 14,
+                "setup_fee_usd": 3500,
+                "pricing": {
+                    "US": {"currency": "USD", "monthly": 997, "annual": 9970},
+                    "CO": {"currency": "COP", "monthly": 3900000, "annual": 39000000}
+                },
+                "entitlements": [
+                    "all_features",
+                    "multi_location_routing",
+                    "custom_ai_voice_cloning",
+                    "advanced_reddit_intelligence",
+                    "dedicated_sla_support"
+                ]
+            }
+        }
     }
 }
 

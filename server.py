@@ -518,6 +518,94 @@ def ghl_sync_lead(req: GHLContactSyncRequest):
         "product_interest": record.product_interest
     }
 
+class BusinessDiagnosisInquiryRequest(BaseModel):
+    business_name: str
+    contact_name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    vertical: str = "service_business"  # veterinary, contractor, dental, real_estate, medspa, general
+    city: Optional[str] = "Unknown"
+    country: Optional[str] = "US"
+    estimated_missed_calls: Optional[int] = 10
+    current_software: Optional[str] = "None"
+    notes: Optional[str] = None
+
+@app.post("/api/v1/diagnosis/inquiry")
+def submit_business_diagnosis_inquiry(req: BusinessDiagnosisInquiryRequest):
+    """
+    Ingests, qualifies, and maps universal service business inquiries from alphavisionmethod.com
+    (Vets, Dentals, Contractors, Real Estate, Medspas) into GHL and triggers the Business Clarity flow.
+    """
+    # 1. Ingest into Prospect Intelligence Engine
+    ingest_res = prospect_engine.ingest_prospect({
+        "business_name": req.business_name,
+        "decision_maker_name": req.contact_name,
+        "email": req.email,
+        "phone": req.phone,
+        "city": req.city,
+        "country": req.country,
+        "industry": req.vertical,
+        "vertical": req.vertical,
+        "target_product_id": "alpha_vision_diagnosis"
+    })
+    prospect_id = ingest_res["prospect_id"]
+    
+    # 2. Attach initial diagnostic observations
+    prospect_engine.conduct_research(prospect_id, [
+        {
+            "observation": f"Inquired for systems diagnosis in vertical: {req.vertical}. Reports ~{req.estimated_missed_calls} missed calls/mo.",
+            "source_url": "https://alphavisionmethod.com/vsl",
+            "evidence_quote": f"Current software stack: {req.current_software}. Notes: {req.notes or 'None'}",
+            "confidence": 0.95
+        }
+    ])
+    
+    # 3. Calculate 100-point score
+    score_data = prospect_engine.calculate_100pt_score(prospect_id)
+    score = score_data.get("composite_score", 75)
+    
+    # 4. Upsert into GoHighLevel via Gateway with zero duplication
+    ghl_rec, is_new = ghl_gateway.upsert_contact_record(
+        name=req.contact_name,
+        email=req.email,
+        phone=req.phone,
+        company_name=req.business_name,
+        product_interest=f"diagnosis_{req.vertical}",
+        source="alphavisionmethod_diagnosis_vsl",
+        qualification_score=score
+    )
+    
+    # 5. Build personalized outreach draft
+    prospect_rec = prospect_engine.prospects_store.get(prospect_id)
+    prospect_dict = prospect_rec.model_dump() if prospect_rec else {
+        "id": prospect_id,
+        "business_name": req.business_name,
+        "decision_maker_name": req.contact_name,
+        "vertical": req.vertical,
+        "target_product_id": "alpha_vision_diagnosis"
+    }
+    draft = outreach_engine.generate_personalized_outreach(
+        prospect_dict,
+        demo_link="https://alphavisionmethod.com/vsl"
+    )
+    
+    return {
+        "success": True,
+        "is_new": is_new,
+        "prospect_id": prospect_id,
+        "qualification_score": score,
+        "classification": score_data.get("tier", "TIER_2_GROWTH"),
+        "ghl_contact_id": ghl_rec.ghl_contact_id,
+        "ghl_opportunity_id": ghl_rec.ghl_opportunity_id,
+        "funnel_url": "https://alphavisionmethod.com/vsl",
+        "booking_calendar_url": "https://alphavisionmethod.com/diagnosis",
+        "calendar_id": "2Btd7kd9NkVtIWA9glW4",
+        "speed_to_lead_draft": {
+            "subject": draft.subject,
+            "body": draft.body
+        }
+    }
+
 class GHLHumanTakeoverRequest(BaseModel):
     contact_id: str
     action: str = "ENGAGE"  # ENGAGE or RELEASE
