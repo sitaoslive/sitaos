@@ -41,6 +41,7 @@ from engine.engineering_queue import engineering_queue
 from engine.reddit_engine import reddit_engine
 from engine.voice_ai import voice_ai_engine
 from engine.sales_workflows import sales_workflow_engine
+from engine.ghl_gateway import ghl_gateway, EventEnvelope
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("AV-SalesOS")
@@ -455,6 +456,81 @@ def get_founder_decisions():
             }
         ]
     }
+
+# ==============================================================================
+# GOHIGHLEVEL COMMERCIAL INTEGRATION GATEWAY (Sections 7, 10, 24)
+# ==============================================================================
+
+@app.post("/api/v1/ghl/webhook")
+async def ghl_webhook_receiver(request: Request):
+    """
+    Ingests official GHL webhooks with signature verification, deduplication, and loop prevention.
+    """
+    raw_body = await request.body()
+    sig = request.headers.get("X-GHL-Signature") or request.headers.get("x-ghl-signature")
+    success, reason, envelope = ghl_gateway.ingest_webhook_event(raw_body=raw_body, signature=sig)
+    if not success:
+        if reason == "INVALID_SIGNATURE":
+            raise HTTPException(status_code=401, detail="Invalid webhook signature")
+        raise HTTPException(status_code=400, detail=f"Webhook ingestion failed: {reason}")
+    return {
+        "status": "ACCEPTED",
+        "reason": reason,
+        "event_id": envelope.event_id if envelope else None
+    }
+
+@app.get("/api/v1/ghl/integration-health")
+def get_ghl_integration_health():
+    """
+    Returns real-time GoHighLevel commercial integration health telemetry.
+    """
+    return ghl_gateway.get_integration_health()
+
+class GHLContactSyncRequest(BaseModel):
+    name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    company_name: Optional[str] = None
+    product_interest: str = "vet_freedom"
+    source: str = "website_funnel"
+    qualification_score: int = 0
+
+@app.post("/api/v1/ghl/sync-lead")
+def ghl_sync_lead(req: GHLContactSyncRequest):
+    """
+    Canonical contact deduplication and upsert endpoint.
+    """
+    record, is_new = ghl_gateway.upsert_contact_record(
+        name=req.name,
+        email=req.email,
+        phone=req.phone,
+        company_name=req.company_name,
+        product_interest=req.product_interest,
+        source=req.source,
+        qualification_score=req.qualification_score
+    )
+    return {
+        "success": True,
+        "is_new": is_new,
+        "internal_prospect_id": record.internal_prospect_id,
+        "ghl_contact_id": record.ghl_contact_id,
+        "ghl_opportunity_id": record.ghl_opportunity_id,
+        "product_interest": record.product_interest
+    }
+
+class GHLHumanTakeoverRequest(BaseModel):
+    contact_id: str
+    action: str = "ENGAGE"  # ENGAGE or RELEASE
+    operator_name: Optional[str] = "founder"
+
+@app.post("/api/v1/ghl/human-takeover")
+def ghl_human_takeover(req: GHLHumanTakeoverRequest):
+    """
+    Toggles human takeover lock to pause or resume automated AI interventions.
+    """
+    if req.action.upper() == "RELEASE":
+        return ghl_gateway.release_human_takeover(contact_id=req.contact_id)
+    return ghl_gateway.engage_human_takeover(contact_id=req.contact_id, operator_name=req.operator_name or "founder")
 
 @app.get("/api/v1/metrics")
 def get_metrics():
