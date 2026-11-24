@@ -99,9 +99,14 @@ def test_render_onboarding_portal_html():
     assert "Book Your 1-on-1 Session" in html
 
 def test_render_command_center_html():
-    html = render_command_center()
-    assert "Alpha Vision AI Sales OS" in html
-    assert "Executive Command Center" in html
+    from server import render_command_center, render_admin_command_center
+    landing_html = render_command_center()
+    assert "SitaOS" in landing_html
+    assert "Interactive Demo" in landing_html or "Autonomous" in landing_html
+
+    admin_html = render_admin_command_center()
+    assert "Alpha Vision AI Sales OS" in admin_html
+    assert "Executive Command Center" in admin_html
 
 def test_render_academy_html():
     from server import render_academy

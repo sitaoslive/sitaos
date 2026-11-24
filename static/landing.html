@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SitaOS · Autonomous Operating Systems for High-Ticket Service Businesses</title>
+    <meta name="description" content="Capture 100% of missed emergency calls, dispatch technicians on live radar, and automate clinical EHR and WhatsApp client recall 24/7 on autopilot.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #060913; color: #f1f5f9; }
+        .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-card { background: rgba(30, 41, 59, 0.55); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.07); }
+        .gradient-text { background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #fbbf24 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-tab.active { background: rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.5); color: #60a5fa; font-weight: 800; }
+        .chapter-btn.active { background: rgba(59, 130, 246, 0.25); border-color: #3b82f6; color: #ffffff; }
+        .wave-bar { animation: soundwave 1.2s ease-in-out infinite; }
+        @keyframes soundwave {
+            0%, 100% { height: 4px; }
+            50% { height: 24px; }
+        }
+        .pulse-emerald { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); animation: pulse-green 2s infinite; }
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+        details summary::-webkit-details-marker { display:none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
+    <!-- Announcement Bar -->
+    <div class="bg-gradient-to-r from-blue-900/60 via-indigo-900/60 to-purple-900/60 border-b border-blue-500/20 px-4 py-2 text-center text-xs font-semibold text-blue-200 flex items-center justify-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span><strong>New Release 2.5:</strong> Real-time Voice AI Answering + Multi-Tenant Subdomain Provisioning is now Live!</span>
+        <a href="#interactive-demo" class="underline text-white hover:text-blue-300 ml-1 font-bold">Watch Interactive Video &rarr;</a>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="glass sticky top-0 z-50 border-b border-slate-800/80 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+            <a href="/" class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-emerald-500 flex items-center justify-center text-white font-black text-base shadow-lg shadow-blue-500/25">S</span>
+                <div>
+                    <span class="text-base font-black tracking-tight text-white uppercase flex items-center gap-1.5">
+                        SitaOS <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono font-bold">2.5</span>
+                    </span>
+                    <p class="text-[10px] text-slate-400 font-medium">By Alpha Vision Software</p>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-5 text-xs font-semibold text-slate-400">
+                <a href="#video-demo" class="hover:text-white transition flex items-center gap-1">
+                    <span class="text-rose-400">▶</span> Interactive Video
+                </a>
+                <a href="#interactive-demo" class="hover:text-white transition">App Sandbox</a>
+                <a href="#diagnosis-section" class="text-amber-400 hover:text-amber-300 transition flex items-center gap-1">
+                    <span>🧭</span> Systems Diagnosis
+                </a>
+                <a href="#roi-calculator" class="hover:text-white transition">ROI Math</a>
+                <a href="#pricing" class="hover:text-white transition">Self-Serve Pricing</a>
+                <a href="/academy" class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                    <span>🎓</span> Operations Academy
+                </a>
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <a href="/app" class="hidden sm:inline-flex text-xs bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3 py-2 rounded-xl border border-slate-700 transition items-center gap-1.5">
+                <span>⚡</span>
+                <span>Command Center</span>
+            </a>
+            <button onclick="openTrialModal('service_business_os')" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:brightness-110 text-white text-xs font-black px-4 py-2.5 rounded-xl shadow-lg shadow-blue-900/30 transition flex items-center gap-2">
+                <span>Start 14-Day Free Trial</span>
+                <span class="text-slate-200">&rarr;</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================================================================== -->
+    <!-- HERO SECTION -->
+    <!-- ==================================================================== -->
+    <section class="relative pt-16 pb-16 px-4 md:px-8 max-w-7xl mx-auto w-full text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            100% Autonomous B2B Operating Systems · Zero Discovery Call Required
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.08]">
+            Stop Losing $850 on Every Missed Call. Turn Inquiries Into Customers <span class="gradient-text">24/7 on Autopilot.</span>
+        </h1>
+
+        <p class="text-slate-300 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed">
+            The all-in-one autonomous platform for <strong>Mobile Veterinarians, HVAC & Trade Contractors, and Dental Practices</strong>. 
+            24/7 Voice AI Receptionist, live GPS dispatch radar, WhatsApp client recall, and one-click billing. Set it up in 60 seconds.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button onclick="openTrialModal('service_business_os')" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 text-white font-black text-sm rounded-2xl shadow-xl shadow-blue-900/30 transition flex items-center justify-center gap-2">
+                <span>⚡ Start 14-Day Free Trial ($0 Today)</span>
+                <span>&rarr;</span>
+            </button>
+            <a href="#video-demo" class="w-full sm:w-auto px-6 py-4 glass hover:bg-slate-800/60 text-white font-bold text-sm rounded-2xl border border-slate-700 transition flex items-center justify-center gap-2">
+                <span class="text-rose-400 font-bold">▶</span>
+                <span>Watch Interactive Video Walkthrough (2 Min)</span>
+            </a>
+            <a href="#diagnosis-section" class="w-full sm:w-auto px-5 py-4 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold text-xs rounded-2xl border border-amber-500/30 transition flex items-center justify-center gap-1.5">
+                <span>🧭 Free Systems Diagnosis</span>
+            </a>
+        </div>
+
+        <!-- Social Proof Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 max-w-4xl mx-auto text-left">
+            <div class="glass-card p-4 rounded-2xl space-y-1">
+                <span class="text-2xl font-black text-white font-mono">< 2 Sec</span>
+                <p class="text-[11px] text-slate-400 font-semibold">Speed-to-Lead Response Time</p>
+            </div>
+            <div class="glass-card p-4 rounded-2xl space-y-1">
+                <span class="text-2xl font-black text-emerald-400 font-mono">78%</span>
+                <p class="text-[11px] text-slate-400 font-semibold">Deals Won by Answering First</p>
+            </div>
+            <div class="glass-card p-4 rounded-2xl space-y-1">
+                <span class="text-2xl font-black text-blue-400 font-mono">3+ Hours</span>
+                <p class="text-[11px] text-slate-400 font-semibold">Saved Daily in Admin & Dispatch</p>
+            </div>
+            <div class="glass-card p-4 rounded-2xl space-y-1">
+                <span class="text-2xl font-black text-amber-400 font-mono">$0 Today</span>
+                <p class="text-[11px] text-slate-400 font-semibold">Instant 14-Day Self-Serve Trial</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 1: INTERACTIVE VIDEO DEMO SHOWCASE (ADVANCED VIDEO SIMULATOR) -->
+    <!-- ==================================================================== -->
+    <section id="video-demo" class="py-16 px-4 md:px-8 max-w-7xl mx-auto w-full space-y-6">
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-rose-400 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20">
+                <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+                <span>Interactive Video Walkthrough</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">See the OS in Action in 2 Minutes</h2>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto">Scrub through chapters or click any milestone below to watch how SitaOS intercepts emergency calls, updates the patient or dispatch record, and gets paid automatically.</p>
+        </div>
+
+        <!-- Master Video Player Box -->
+        <div class="glass rounded-3xl border border-slate-700/80 overflow-hidden shadow-2xl relative">
+            <!-- Video Top Header Bar -->
+            <div class="bg-slate-900/95 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    </div>
+                    <span class="text-slate-300 font-bold flex items-center gap-1.5">
+                        <span>🎬</span> SitaOS Product Demo · Ultra HD 4K
+                    </span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono font-bold">60 FPS</span>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span id="videoLiveStatus" class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-bold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Interactive Video Player</span>
+                    </span>
+                    <button onclick="toggleVideoMode()" id="videoModeToggleBtn" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg border border-slate-700 transition font-medium">
+                        Switch to Custom Video Embed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video Screen Viewport -->
+            <div id="videoViewport" class="relative bg-slate-950 aspect-[16/9] max-h-[560px] overflow-hidden flex flex-col justify-between p-6 sm:p-10 select-none">
+                <!-- Video Ambient Background Glow -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/10 via-transparent to-emerald-900/10 pointer-events-none"></div>
+
+                <!-- Scene 1: Intake & Missed Call Interception -->
+                <div id="videoScene-0" class="video-scene absolute inset-0 p-6 sm:p-10 flex flex-col justify-between transition-opacity duration-500 opacity-100">
+                    <div class="flex justify-between items-start">
+                        <div class="bg-slate-900/90 backdrop-blur border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-0.5">
+                            <span class="text-slate-400 text-[10px] block uppercase font-mono">Chapter 1 of 4</span>
+                            <span class="font-bold text-white text-sm">24/7 AI Voice & SMS Call Rescue</span>
+                        </div>
+                        <div class="flex items-center gap-1 px-3 py-1.5 bg-rose-500/20 border border-rose-500/40 text-rose-300 rounded-xl text-xs font-mono font-bold">
+                            <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+                            MISSED INCOMING CALL: (555) 349-8821
+                        </div>
+                    </div>
+
+                    <!-- Scene Center Visual -->
+                    <div class="max-w-xl mx-auto w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white text-lg font-bold">🤖</span>
+                                <div>
+                                    <div class="text-xs font-bold text-white">SitaOS Neural Voice Engine</div>
+                                    <div class="text-[10px] text-emerald-400 font-mono">Call Intercept Latency: 1.84 seconds</div>
+                                </div>
+                            </div>
+                            <!-- Live Animated Audio Soundwave -->
+                            <div class="flex items-center gap-1 h-6">
+                                <span class="w-1 bg-blue-400 rounded-full wave-bar" style="animation-delay: 0.1s"></span>
+                                <span class="w-1 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.3s"></span>
+                                <span class="w-1 bg-blue-400 rounded-full wave-bar" style="animation-delay: 0.2s"></span>
+                                <span class="w-1 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.5s"></span>
+                                <span class="w-1 bg-purple-400 rounded-full wave-bar" style="animation-delay: 0.4s"></span>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-slate-300">
+                                <strong class="text-blue-400">Caller:</strong> "Hi, my golden retriever ate chocolate and is vomiting, can someone come to our home in Northside immediately?"
+                            </div>
+                            <div class="p-3 bg-blue-900/30 border border-blue-500/30 rounded-xl text-white">
+                                <strong class="text-emerald-400">SitaOS Voice AI:</strong> "I understand completely! We have Dr. Morales 12 minutes away with a mobile trauma kit. I'm dispatching her route now and sending your live GPS tracker."
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-300 border border-slate-800 font-mono">
+                            ⚡ Zero Humans Needed · Lead Locked Before Competitor Even Picks Up
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Scene 2: Live Radar Fleet Dispatch -->
+                <div id="videoScene-1" class="video-scene absolute inset-0 p-6 sm:p-10 flex flex-col justify-between transition-opacity duration-500 opacity-0 pointer-events-none">
+                    <div class="flex justify-between items-start">
+                        <div class="bg-slate-900/90 backdrop-blur border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-0.5">
+                            <span class="text-slate-400 text-[10px] block uppercase font-mono">Chapter 2 of 4</span>
+                            <span class="font-bold text-white text-sm">Automated GPS Dispatch & Radar Telemetry</span>
+                        </div>
+                        <span class="px-3 py-1.5 bg-blue-500/20 border border-blue-500/40 text-blue-300 rounded-xl text-xs font-mono font-bold">
+                            RADAR ACTIVE: 6 UNITS ONLINE
+                        </span>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden h-64 flex items-center justify-center">
+                        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                        <!-- Radar Sweep -->
+                        <div class="w-48 h-48 rounded-full border border-blue-500/30 animate-ping absolute"></div>
+                        <div class="w-32 h-32 rounded-full border border-emerald-500/40 absolute flex items-center justify-center">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-slate-950/90 border border-slate-800 p-2.5 rounded-xl text-[11px] text-slate-300">
+                            🚚 <strong>Unit #02:</strong> In Transit &rarr; 842 Highland Ave (ETA: 7m)
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-slate-950/90 border border-slate-800 p-2.5 rounded-xl text-[11px] text-slate-300">
+                            🩺 <strong>Mobile Vet 01:</strong> En Route &rarr; Max (Golden)
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-300 border border-slate-800 font-mono">
+                            📍 Automated Driver WhatsApp Notification with Waze/Google Maps Deep Link
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Scene 3: Clinical EHR & Medical Prescription Generator -->
+                <div id="videoScene-2" class="video-scene absolute inset-0 p-6 sm:p-10 flex flex-col justify-between transition-opacity duration-500 opacity-0 pointer-events-none">
+                    <div class="flex justify-between items-start">
+                        <div class="bg-slate-900/90 backdrop-blur border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-0.5">
+                            <span class="text-slate-400 text-[10px] block uppercase font-mono">Chapter 3 of 4</span>
+                            <span class="font-bold text-white text-sm">Paperless Field EHR & Stopwatch Billing</span>
+                        </div>
+                        <span class="px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-mono font-bold">
+                            EHR ENCRYPTED & HIPAA-COMPLIANT
+                        </span>
+                    </div>
+
+                    <div class="max-w-xl mx-auto w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="text-xs">
+                                <span class="text-slate-400">Patient:</span> <strong class="text-white">Max (Golden Retriever · 4 yrs)</strong>
+                            </div>
+                            <span class="font-mono text-emerald-400 font-bold text-xs">Stopwatch: 00:34:18 ($185.00)</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 text-[11px]">
+                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block mb-1">Prescription Generated:</span>
+                                <strong class="text-blue-400">OKVET-01 Antimicrobiano</strong>
+                                <p class="text-[10px] text-slate-400 pt-1">Signed via biometric token</p>
+                            </div>
+                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block mb-1">WhatsApp Delivery:</span>
+                                <strong class="text-emerald-400">✓ Delivered in 1.2s</strong>
+                                <p class="text-[10px] text-slate-400 pt-1">PDF sent to owner mobile</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-300 border border-slate-800 font-mono">
+                            📄 100% Paperless · Saves 3.5 Hours of Charting Per Doctor Every Day
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Scene 4: 1-Click Card Billing & 5-Star Review Engine -->
+                <div id="videoScene-3" class="video-scene absolute inset-0 p-6 sm:p-10 flex flex-col justify-between transition-opacity duration-500 opacity-0 pointer-events-none">
+                    <div class="flex justify-between items-start">
+                        <div class="bg-slate-900/90 backdrop-blur border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-0.5">
+                            <span class="text-slate-400 text-[10px] block uppercase font-mono">Chapter 4 of 4</span>
+                            <span class="font-bold text-white text-sm">Instant Card Stripe Checkout & Review Loop</span>
+                        </div>
+                        <span class="px-3 py-1.5 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-xl text-xs font-mono font-bold">
+                            STRIPE SECURE TOKENIZED
+                        </span>
+                    </div>
+
+                    <div class="max-w-md mx-auto w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl text-center space-y-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mx-auto">✓</div>
+                        <div class="font-mono text-3xl font-black text-white">$1,250.00 USD</div>
+                        <span class="inline-block text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-bold">Payment Settled Instantly via Stripe</span>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-[11px] text-slate-300 text-left">
+                            ⭐ <strong>Automated Review Request Sent:</strong> Customer left a 5-star Google Review 4 minutes after service completion.
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-300 border border-slate-800 font-mono">
+                            💰 Zero Bad Debt · Cash Hit Your Account Same-Day
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Custom Video Embed Screen (Toggled on demand) -->
+                <div id="customVideoContainer" class="hidden absolute inset-0 bg-black flex flex-col items-center justify-center p-4">
+                    <div class="w-full h-full max-w-4xl relative">
+                        <iframe id="customVideoIframe" class="w-full h-full rounded-2xl border border-slate-800" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?controls=1&rel=0" title="Product Walkthrough Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Bottom Captions Overlay -->
+                <div class="relative z-10 bg-slate-950/80 backdrop-blur border border-slate-800/80 rounded-xl p-3 text-center text-xs text-slate-200 font-medium">
+                    <span id="videoCaptionText">"SitaOS 24/7 Neural Voice Receptionist answers in under 2 seconds, interrogates caller intent, and locks in the appointment."</span>
+                </div>
+            </div>
+
+            <!-- Video Player Controls & Scrub Bar -->
+            <div class="bg-slate-900/90 border-t border-slate-800 p-4 space-y-3">
+                <!-- Timeline Scrub Bar -->
+                <div class="w-full bg-slate-800 rounded-full h-2 relative cursor-pointer overflow-hidden" onclick="seekVideoBar(event)">
+                    <div id="videoProgressBar" class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 w-1/4 transition-all duration-300"></div>
+                </div>
+
+                <!-- Controls Row -->
+                <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-3">
+                        <button onclick="toggleVideoPlayback()" id="playPauseBtn" class="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center font-bold text-xs transition">
+                            ⏸
+                        </button>
+                        <span id="videoTimerLabel" class="font-mono text-slate-300 font-bold">00:35 / 02:20</span>
+                        <div class="hidden sm:flex items-center gap-1.5 text-slate-400 text-[11px] ml-2">
+                            <span>Speed:</span>
+                            <button onclick="setVideoSpeed(1)" class="px-1.5 py-0.5 rounded bg-slate-800 text-white font-mono hover:bg-slate-700">1x</button>
+                            <button onclick="setVideoSpeed(1.5)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:text-white font-mono hover:bg-slate-700">1.5x</button>
+                            <button onclick="setVideoSpeed(2)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:text-white font-mono hover:bg-slate-700">2x</button>
+                        </div>
+                    </div>
+
+                    <!-- Chapter Buttons -->
+                    <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                        <button onclick="jumpToChapter(0)" id="chapterBtn-0" class="chapter-btn active px-3 py-1.5 rounded-lg border border-slate-700 text-[11px] font-bold transition flex items-center gap-1">
+                            <span>01</span> <span>AI Voice Call</span>
+                        </button>
+                        <button onclick="jumpToChapter(1)" id="chapterBtn-1" class="chapter-btn px-3 py-1.5 rounded-lg border border-slate-700 text-[11px] font-bold text-slate-400 hover:text-white transition flex items-center gap-1">
+                            <span>02</span> <span>GPS Dispatch</span>
+                        </button>
+                        <button onclick="jumpToChapter(2)" id="chapterBtn-2" class="chapter-btn px-3 py-1.5 rounded-lg border border-slate-700 text-[11px] font-bold text-slate-400 hover:text-white transition flex items-center gap-1">
+                            <span>03</span> <span>Clinical EHR</span>
+                        </button>
+                        <button onclick="jumpToChapter(3)" id="chapterBtn-3" class="chapter-btn px-3 py-1.5 rounded-lg border border-slate-700 text-[11px] font-bold text-slate-400 hover:text-white transition flex items-center gap-1">
+                            <span>04</span> <span>Instant Billing</span>
+                        </button>
+                    </div>
+
+                    <button onclick="openTrialModal('service_business_os')" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white font-black text-xs px-4 py-1.5 rounded-xl transition shadow-lg shadow-emerald-900/30">
+                        Test This Yourself &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 2: LIVE INTERACTIVE SANDBOX APPS (CLICK TO TEST REAL APPS) -->
+    <!-- ==================================================================== -->
+    <section id="interactive-demo" class="py-16 px-4 md:px-8 max-w-7xl mx-auto w-full space-y-6">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 px-3 py-1 rounded-full bg-blue-500/10">Interactive Sandbox</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">Test the Live Working Software</h2>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto">Click through the live tabs below to test the mobile vet EHR, the contractor dispatch radar, or test the 24/7 AI call answering engine right in your browser.</p>
+        </div>
+
+        <!-- Interactive Demo Frame -->
+        <div class="glass rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+            <!-- Simulator Window Controls -->
+            <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    <span class="text-xs text-slate-400 font-mono ml-2">sitaos.com/demo/interactive-suite</span>
+                </div>
+
+                <!-- Product Switcher Tabs -->
+                <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+                    <button onclick="switchDemo('vet')" id="demo-tab-vet" class="demo-tab active px-3.5 py-1.5 rounded-lg border border-transparent font-bold transition flex items-center gap-1.5">
+                        <span>🐾</span> <span>Vet Freedom OS</span>
+                    </button>
+                    <button onclick="switchDemo('contractor')" id="demo-tab-contractor" class="demo-tab px-3.5 py-1.5 rounded-lg border border-transparent font-bold transition flex items-center gap-1.5 text-slate-400 hover:text-white">
+                        <span>🔧</span> <span>Contractor Service OS</span>
+                    </button>
+                    <button onclick="switchDemo('phone')" id="demo-tab-phone" class="demo-tab px-3.5 py-1.5 rounded-lg border border-transparent font-bold transition flex items-center gap-1.5 text-slate-400 hover:text-white">
+                        <span>📞</span> <span>Missed-Call AI Bot</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 1: VET FREEDOM OS INTERACTIVE SIMULATION -->
+            <div id="demo-view-vet" class="p-6 md:p-8 space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left: Clinical Controls -->
+                    <div class="space-y-4">
+                        <div class="glass-card p-5 rounded-2xl border border-slate-700 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-white flex items-center gap-2">
+                                    <span>⏱️</span> Consultation Stopwatch
+                                </span>
+                                <span id="vetTimer" class="font-mono text-xs font-bold text-emerald-400">00:00:00</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Automatically logs appointment duration and bills time-based medical procedures.</p>
+                            <div class="flex gap-2">
+                                <button onclick="toggleVetTimer()" id="vetTimerBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2 rounded-xl transition">Start Consultation</button>
+                                <button onclick="resetVetTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-2 rounded-xl transition">Reset</button>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border border-slate-700 space-y-3">
+                            <span class="text-xs font-bold text-white flex items-center gap-2">
+                                <span>📋</span> Digital Formula Generator
+                            </span>
+                            <div class="space-y-2 text-xs">
+                                <select id="vetFormulaSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 text-xs">
+                                    <option>OKVET-01 · Antimicrobiano Canino</option>
+                                    <option>OKVET-02 · Analgésico Post-Quirúrgico</option>
+                                    <option>OKVET-03 · Desparasitación Completa</option>
+                                </select>
+                                <button onclick="generateFormula()" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 rounded-xl transition">Generate Signed Prescription</button>
+                                <p id="formulaMsg" class="text-[11px] text-emerald-400 hidden">✓ Prescription signed & dispatched via WhatsApp to pet owner.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center & Right: Live Route Radar & EHR View -->
+                    <div class="lg:col-span-2 glass-card p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Live Auxiliary Fleet GPS & Route Optimization</h4>
+                                <span class="text-xs text-blue-400">Mobile Unit 01 · Dra. Sofía Morales · Bogotá Norte</span>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                In Transit (ETA: 8 mins)
+                            </span>
+                        </div>
+
+                        <!-- Simulated Radar Map -->
+                        <div class="h-56 bg-slate-950 rounded-xl border border-slate-800 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <!-- Route Line -->
+                            <div class="w-48 h-0.5 bg-blue-500/60 rotate-12 relative">
+                                <span class="absolute -top-1.5 left-0 w-3 h-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50"></span>
+                                <span class="absolute -top-1.5 right-0 w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span class="absolute -top-1.5 right-0 w-3 h-3 rounded-full bg-emerald-400"></span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+                                📍 Next Stop: <strong>Max (Golden Retriever) · Vacunación Séxtuple</strong>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs text-slate-400">Want the full standalone app?</span>
+                            <a href="/demo/vet-life/d_vet_demo_master" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 font-bold underline">Open Dedicated Vet Demo Window &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: CONTRACTOR SERVICE OS INTERACTIVE SIMULATION -->
+            <div id="demo-view-contractor" class="p-6 md:p-8 space-y-6 hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="space-y-4">
+                        <div class="glass-card p-5 rounded-2xl border border-slate-700 space-y-3">
+                            <span class="text-xs font-bold text-white flex items-center gap-2">
+                                <span>🚨</span> Incoming Emergency Call Triage
+                            </span>
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-amber-400 font-bold">HVAC Compressor Blown</span>
+                                    <span class="text-slate-400 font-mono">1 min ago</span>
+                                </div>
+                                <p class="text-[11px] text-slate-300">Caller: Robert Green · 144 Elm St</p>
+                                <span class="inline-block text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">Estimated Job: $1,250</span>
+                            </div>
+                            <button onclick="dispatchTech()" id="dispatchBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold py-2 rounded-xl transition">Dispatch Nearest Tech (Mike R.)</button>
+                            <p id="dispatchMsg" class="text-[11px] text-emerald-400 hidden">✓ Mike R. notified via WhatsApp with navigation link.</p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border border-slate-700 space-y-2">
+                            <span class="text-xs font-bold text-white flex items-center gap-2">
+                                <span>💳</span> 1-Click Mobile Invoice
+                            </span>
+                            <p class="text-[11px] text-slate-400">Technicians collect card payments on site via Stripe terminal integration.</p>
+                            <div class="p-2.5 bg-slate-900 rounded-lg text-center font-mono text-sm text-emerald-400 font-bold border border-slate-800">
+                                $1,250.00 USD · PAID
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Dispatch Radar -->
+                    <div class="lg:col-span-2 glass-card p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Fleet Dispatch & Live Job Radar</h4>
+                                <span class="text-xs text-amber-400">Apex Climate & HVAC · 6 Active Trucks</span>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 font-bold">4 Completed · 2 In Progress</span>
+                        </div>
+
+                        <div class="h-56 bg-slate-950 rounded-xl border border-slate-800 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <!-- Pulse Rings -->
+                            <div class="w-24 h-24 rounded-full border border-amber-500/30 animate-ping absolute"></div>
+                            <div class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500 flex items-center justify-center text-amber-400 font-bold text-xs">
+                                🚚 04
+                            </div>
+                            <div class="absolute top-3 right-3 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+                                Crew 04: <strong>On site · Replacing 3-Ton Heat Pump</strong>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs text-slate-400">Want the full contractor experience?</span>
+                            <a href="/demo/service-os/d_ser_demo_master" target="_blank" class="text-xs text-amber-400 hover:text-amber-300 font-bold underline">Open Dedicated Contractor Demo Window &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: 24/7 MISSED-CALL AI RESCUE PHONE SIMULATOR -->
+            <div id="demo-view-phone" class="p-6 md:p-8 space-y-6 hidden">
+                <div class="max-w-md mx-auto glass-card p-6 rounded-3xl border border-slate-700 space-y-4 shadow-2xl">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-xs font-bold text-white">Live Phone Simulator</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono">Twilio +19299663559</span>
+                    </div>
+
+                    <!-- Chat Conversation Screen -->
+                    <div id="chatScreen" class="h-64 bg-slate-950 rounded-2xl p-4 overflow-y-auto space-y-3 text-xs font-sans">
+                        <div class="flex gap-2">
+                            <div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%]">
+                                <span class="text-[10px] text-rose-400 font-bold block mb-1">📵 MISSED CALL FROM CUSTOMER</span>
+                                "Hi, my AC just shut down and water is leaking through my ceiling! Need emergency help."
+                            </div>
+                        </div>
+                        <div class="flex gap-2 justify-end">
+                            <div class="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%]">
+                                <span class="text-[10px] text-blue-200 font-bold block mb-1">⚡ SITAOS AI (2 SECONDS LATER)</span>
+                                "Hey there, this is the automated assistant for Apex HVAC. Saw we missed your call—we have emergency technicians in your area right now! Can someone be there in 45 minutes?"
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive User Input Field -->
+                    <div class="flex gap-2">
+                        <input id="userReplyInput" type="text" placeholder="Type a reply (e.g. Yes please send someone)..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500">
+                        <button onclick="sendSimulatedReply()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition">Send</button>
+                    </div>
+
+                    <div class="pt-2 text-center">
+                        <button onclick="openTrialModal('rescue_bot')" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white font-bold text-xs py-2.5 rounded-xl transition shadow-lg shadow-emerald-900/30">
+                            Add This Missed-Call AI for $47/mo &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 3: ALPHA VISION METHOD 60-SEC INTERACTIVE SYSTEMS DIAGNOSIS -->
+    <!-- ==================================================================== -->
+    <section id="diagnosis-section" class="py-16 px-4 md:px-8 max-w-5xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">Alpha Vision Method</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white">60-Second Business Systems Diagnosis</h2>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto">Discover where your business is bleeding high-ticket clients. Answer 4 quick questions to receive your diagnostic score and custom growth roadmap.</p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl border border-slate-800 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-bold mb-2">1. Your Business Vertical</label>
+                    <select id="diagVertical" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200">
+                        <option value="vet">Mobile Veterinarian Clinic</option>
+                        <option value="contractor">HVAC / Plumbing / General Contractor</option>
+                        <option value="dental">Dental & Orthodontics Practice</option>
+                        <option value="medspa">Medical Aesthetics / MedSpa</option>
+                        <option value="realestate">High-Volume Real Estate Brokerage</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-2">2. Average Inquiries / Calls Per Month</label>
+                    <select id="diagCalls" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200">
+                        <option value="50">Under 75 Inquiries / Month</option>
+                        <option value="150" selected>75 to 200 Inquiries / Month</option>
+                        <option value="350">200 to 500 Inquiries / Month</option>
+                        <option value="750">500+ Inquiries / Month</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-2">3. Current Speed to Lead on Missed Calls</label>
+                    <select id="diagSpeed" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200">
+                        <option value="slow">30+ Minutes / Whenever We Get Free</option>
+                        <option value="medium">10 to 30 Minutes</option>
+                        <option value="fast">Under 5 Minutes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-2">4. Your Target Monthly Revenue Goal</label>
+                    <select id="diagGoal" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200">
+                        <option value="25k">$25,000 / month</option>
+                        <option value="50k" selected>$50,000 / month (Scale Tier)</option>
+                        <option value="100k">$100,000+ / month (Enterprise)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Diagnosis Calculate Button -->
+            <button onclick="runDiagnosisAudit()" class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-black text-sm rounded-2xl shadow-xl shadow-amber-900/30 transition flex items-center justify-center gap-2">
+                <span>⚡ Calculate My Business Diagnostic Score & Leak Points</span>
+            </button>
+
+            <!-- Diagnosis Results Display Card (Hidden until clicked) -->
+            <div id="diagResultCard" class="hidden p-6 bg-slate-950/90 rounded-2xl border border-amber-500/40 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs text-amber-400 font-mono font-bold uppercase">Automated Systems Audit Result</span>
+                        <h4 class="text-lg font-black text-white">System Efficiency Score: <span id="diagScore" class="text-rose-400 font-mono">42 / 100</span> (Critical Leak)</h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400">Estimated Monthly Revenue Bleed:</span>
+                        <div id="diagBleed" class="text-2xl font-black text-rose-400 font-mono">-$21,250 / mo</div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-xs text-slate-300">
+                    <p>🚨 <strong>Primary Bottleneck:</strong> 78% of service prospects hire the competitor who answers first. Because your speed-to-lead exceeds 5 minutes, an estimated 15 to 25 high-ticket jobs per month are forfeited to rivals.</p>
+                    <p>✅ <strong>The Solution:</strong> Deploying SitaOS 24/7 Voice AI + Subdomain Dispatch eliminates this leak immediately with zero change to your current phone number.</p>
+                </div>
+
+                <div class="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                    <a href="https://alphavisionmethod.com/vsl" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-lg shadow-amber-900/40">
+                        <span>🧭 Book Systems Diagnosis Call on Calendar 2Btd7kd9NkVtIWA9glW4</span>
+                        <span>&rarr;</span>
+                    </a>
+                    <button onclick="openTrialModal('service_business_os')" class="w-full sm:w-auto px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition border border-slate-700">
+                        Skip Call & Launch 14-Day Free Trial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 4: INTERACTIVE ROI CALCULATOR -->
+    <!-- ==================================================================== -->
+    <section id="roi-calculator" class="py-16 px-4 md:px-8 max-w-5xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10">Interactive Math</span>
+            <h2 class="text-3xl font-black text-white">How Much Money Are Missed Calls Costing You?</h2>
+            <p class="text-xs text-slate-400">Move the sliders below to calculate your recoverable revenue in real time.</p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl border border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6 text-xs">
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <label class="text-slate-300 font-semibold">Monthly Calls & Inquiries Received:</label>
+                        <span id="callCountLabel" class="text-white font-mono font-bold">150 Calls</span>
+                    </div>
+                    <input type="range" id="callsSlider" min="50" max="500" value="150" step="10" oninput="calculateROI()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <label class="text-slate-300 font-semibold">Estimated % Missed While Busy/Driving:</label>
+                        <span id="missedPctLabel" class="text-amber-400 font-mono font-bold">25% (37 Calls)</span>
+                    </div>
+                    <input type="range" id="missedSlider" min="10" max="60" value="25" step="5" oninput="calculateROI()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <label class="text-slate-300 font-semibold">Average Value of a Customer / Job:</label>
+                        <span id="valLabel" class="text-emerald-400 font-mono font-bold">$850 USD</span>
+                    </div>
+                    <input type="range" id="valSlider" min="150" max="3000" value="850" step="50" oninput="calculateROI()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                </div>
+            </div>
+
+            <!-- Dynamic ROI Result Card -->
+            <div class="glass-card p-6 rounded-2xl border border-emerald-500/30 space-y-4 text-center">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Estimated Lost Monthly Revenue</span>
+                <div id="lostRevDisplay" class="text-4xl font-black text-rose-400 font-mono">$31,450 / mo</div>
+
+                <div class="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-xs text-slate-300">
+                    SitaOS 24/7 AI recovers at least 60% of lost callers:
+                    <div id="recoveredDisplay" class="text-2xl font-black text-emerald-400 font-mono pt-1">+$18,870 / mo</div>
+                </div>
+
+                <div class="text-[11px] text-slate-400">
+                    System Cost: <strong>$197 - $497 / mo</strong> · Return on Investment: <strong id="roiMultiple" class="text-emerald-400 font-mono">37.8x ROI</strong>
+                </div>
+
+                <button onclick="openTrialModal('service_business_os')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg shadow-emerald-900/30">
+                    Recover This Lost Revenue Now &rarr;
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 5: COMPARISON MATRIX -->
+    <!-- ==================================================================== -->
+    <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto w-full space-y-6">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-400 px-3 py-1 rounded-full bg-purple-500/10">The Unfair Advantage</span>
+            <h2 class="text-3xl font-black text-white">Why Answering Machines & Human Call Centers Fail</h2>
+        </div>
+
+        <div class="glass rounded-3xl border border-slate-800 overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300 min-w-[600px]">
+                <thead>
+                    <tr class="border-b border-slate-800 bg-slate-900/80 text-white font-bold">
+                        <th class="p-4">Feature</th>
+                        <th class="p-4 text-rose-400">Standard Voicemail</th>
+                        <th class="p-4 text-amber-400">Call Center Service</th>
+                        <th class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-black">SitaOS 24/7 AI</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60">
+                    <tr>
+                        <td class="p-4 font-semibold text-white">Speed to Lead</td>
+                        <td class="p-4 text-rose-400">Hours or Never (85% hang up)</td>
+                        <td class="p-4 text-amber-400">1 to 5 min wait hold time</td>
+                        <td class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-mono font-bold">< 2 Seconds</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-white">Live Route & Tech Dispatch</td>
+                        <td class="p-4 text-rose-400">None</td>
+                        <td class="p-4 text-amber-400">Sends email note (Delayed)</td>
+                        <td class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-bold">Autonomous GPS Dispatch</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-white">Payment & Invoicing</td>
+                        <td class="p-4 text-rose-400">Manual later</td>
+                        <td class="p-4 text-amber-400">Cannot collect payment</td>
+                        <td class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-bold">1-Click Stripe Mobile Invoice</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-white">WhatsApp Patient/Client Recall</td>
+                        <td class="p-4 text-rose-400">None</td>
+                        <td class="p-4 text-amber-400">None</td>
+                        <td class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-bold">Automated 6-Mo Recalls</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-white">Monthly Cost</td>
+                        <td class="p-4 text-slate-400">Free (Costs you $20k+ in lost jobs)</td>
+                        <td class="p-4 text-amber-400">$600 - $1,500 / mo + per min</td>
+                        <td class="p-4 text-emerald-400 bg-blue-600/10 border-x border-blue-500/20 font-mono font-bold">$47 - $297 / mo Flat</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 6: SELF-SERVE PRICING (NO DISCOVERY CALL REQUIRED) -->
+    <!-- ==================================================================== -->
+    <section id="pricing" class="py-16 px-4 md:px-8 max-w-7xl mx-auto w-full space-y-8">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 px-3 py-1 rounded-full bg-blue-500/10">Transparent Self-Serve Plans</span>
+            <h2 class="text-3xl font-black text-white">Pick Your Operating System. 14-Day Free Trial.</h2>
+            <p class="text-xs text-slate-400">Instant setup in 60 seconds. Cancel anytime with one click.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Plan 1 -->
+            <div class="glass-card p-6 rounded-3xl border border-slate-700 space-y-5 relative">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Trojan Horse Plan</span>
+                    <h3 class="text-xl font-black text-white pt-1">Missed-Call AI Rescue</h3>
+                    <p class="text-xs text-slate-400 pt-1">For any service business losing jobs to unanswered calls.</p>
+                </div>
+                <div class="font-mono">
+                    <span class="text-4xl font-black text-white">$47</span>
+                    <span class="text-xs text-slate-400">/ month</span>
+                </div>
+                <ul class="text-xs space-y-2 text-slate-300">
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 2-Second Instant Text-Back</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> AI Emergency Qualification</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> One-Click Forwarding Setup</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Instant WhatsApp Notification</li>
+                </ul>
+                <button onclick="openTrialModal('rescue_bot')" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl border border-slate-700 transition">
+                    Get Missed-Call AI &rarr;
+                </button>
+            </div>
+
+            <!-- Plan 2: Best Value -->
+            <div class="glass-card p-6 rounded-3xl border border-blue-500/40 space-y-5 relative shadow-xl shadow-blue-900/20">
+                <span class="absolute -top-3 right-6 text-[10px] font-bold px-3 py-0.5 rounded-full bg-blue-600 text-white uppercase tracking-wider">Most Popular</span>
+                <div>
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Veterinary Suite</span>
+                    <h3 class="text-xl font-black text-white pt-1">Vet Freedom OS</h3>
+                    <p class="text-xs text-slate-400 pt-1">Complete mobile practice management & patient EHR.</p>
+                </div>
+                <div class="font-mono">
+                    <span class="text-4xl font-black text-white">$197</span>
+                    <span class="text-xs text-slate-400">/ mo (14 Days Free)</span>
+                </div>
+                <ul class="text-xs space-y-2 text-slate-300">
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Complete Mobile Patient EHR</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Consultation Stopwatch & Billing</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Digital OKVET Medical Formulas</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> WhatsApp 6-Month Patient Recalls</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Auxiliary Fleet GPS Radar</li>
+                </ul>
+                <button onclick="openTrialModal('vet_freedom_os')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-blue-900/30 transition">
+                    Start 14-Day Free Trial ($0) &rarr;
+                </button>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="glass-card p-6 rounded-3xl border border-amber-500/30 space-y-5 relative">
+                <div>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Contractor Suite</span>
+                    <h3 class="text-xl font-black text-white pt-1">Alpha Service Business OS</h3>
+                    <p class="text-xs text-slate-400 pt-1">For HVAC, plumbing, electrical & field trades.</p>
+                </div>
+                <div class="font-mono">
+                    <span class="text-4xl font-black text-white">$297</span>
+                    <span class="text-xs text-slate-400">/ mo (14 Days Free)</span>
+                </div>
+                <ul class="text-xs space-y-2 text-slate-300">
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Live Technician Dispatch Radar</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 1-Click Estimates & Card Invoicing</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 24/7 AI Voice Phone Receptionist</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Automated WhatsApp Crew Routing</li>
+                    <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 60 Field Automation Workflows</li>
+                </ul>
+                <button onclick="openTrialModal('service_business_os')" class="w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-amber-900/30 transition">
+                    Start 14-Day Free Trial ($0) &rarr;
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 7: FREQUENTLY ASKED QUESTIONS (OVERCOMING OBJECTIONS) -->
+    <!-- ==================================================================== -->
+    <section class="py-16 px-4 md:px-8 max-w-4xl mx-auto w-full space-y-6">
+        <div class="text-center space-y-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 py-1 rounded-full bg-slate-800">Clear Answers</span>
+            <h2 class="text-3xl font-black text-white">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-3 text-xs">
+            <details class="glass-card p-5 rounded-2xl border border-slate-700/80 cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center">
+                    <span>Do I need to change my current business phone number?</span>
+                    <span class="text-blue-400 font-mono text-sm">+</span>
+                </summary>
+                <p class="pt-3 text-slate-300 leading-relaxed">
+                    No! You keep your exact existing business phone number. You simply turn on standard conditional call forwarding (e.g., dial *71 followed by your dedicated SitaOS number) so when you are on a roof, in surgery, or sleeping, the AI immediately answers.
+                </p>
+            </details>
+
+            <details class="glass-card p-5 rounded-2xl border border-slate-700/80 cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center">
+                    <span>How fast can our business go live?</span>
+                    <span class="text-blue-400 font-mono text-sm">+</span>
+                </summary>
+                <p class="pt-3 text-slate-300 leading-relaxed">
+                    Under 60 seconds. When you fill out the 14-day trial form, our Supabase cluster automatically provisions your custom subdomain (e.g. <code>bayside-clinic.alphavisionm.com</code>), configures your AI receptionist prompt, and sends you instant login credentials.
+                </p>
+            </details>
+
+            <details class="glass-card p-5 rounded-2xl border border-slate-700/80 cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center">
+                    <span>Is there any contract or cancellation penalty?</span>
+                    <span class="text-blue-400 font-mono text-sm">+</span>
+                </summary>
+                <p class="pt-3 text-slate-300 leading-relaxed">
+                    Zero contracts. All plans are month-to-month. You can cancel with 1 click directly inside your Command Center at any time. You pay $0 today for 14 full days of testing.
+                </p>
+            </details>
+
+            <details class="glass-card p-5 rounded-2xl border border-slate-700/80 cursor-pointer">
+                <summary class="font-bold text-white flex justify-between items-center">
+                    <span>Does SitaOS integrate with our existing CRM or software?</span>
+                    <span class="text-blue-400 font-mono text-sm">+</span>
+                </summary>
+                <p class="pt-3 text-slate-300 leading-relaxed">
+                    Yes. SitaOS features native bi-directional synchronization with GoHighLevel, Jobber, ServiceTitan, Dentrix, and Google Calendar. Every inquiry and booking immediately updates your existing CRM.
+                </p>
+            </details>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="glass border-t border-slate-800/80 px-6 py-8 text-center text-xs text-slate-500 space-y-2 mt-auto">
+        <p>SitaOS · Autonomous Operating Systems for High-Ticket Businesses · Powered by Alpha Vision Method</p>
+        <p class="text-[11px]">Primary Domain: <a href="https://sitaos.com" class="text-blue-400">sitaos.com</a> · Cloud Engine: <a href="https://sitaos.onrender.com" class="text-blue-400">sitaos.onrender.com</a> · <a href="/academy" class="text-amber-400">Operations Academy</a> · <a href="/app" class="text-emerald-400">Command Center</a></p>
+    </footer>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL: INSTANT 14-DAY SELF-SERVE FREE TRIAL -->
+    <!-- ==================================================================== -->
+    <div id="trialModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass max-w-md w-full p-6 md:p-8 rounded-3xl border border-slate-700 space-y-5 relative shadow-2xl">
+            <button onclick="closeTrialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+            
+            <div class="space-y-1">
+                <span class="text-xs font-bold text-emerald-400 font-mono">14-Day Free Trial · Instant Activation</span>
+                <h3 class="text-xl font-black text-white">Create Your Workspace</h3>
+                <p class="text-xs text-slate-400">Instant access in 30 seconds. No setup fees, cancel anytime.</p>
+            </div>
+
+            <form onsubmit="handleTrialSubmit(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-bold mb-1">Business Name</label>
+                    <input id="modalBizName" required type="text" placeholder="e.g. Bayside Animal Clinic / Apex HVAC" oninput="updateSubdomainPreview(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-1">Your Subdomain (Preview)</label>
+                    <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-[11px] text-blue-400">
+                        https://<span id="subdomainPreview" class="text-white font-bold">your-business</span>.alphavisionm.com
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-300 font-bold mb-1">Full Name</label>
+                        <input id="modalName" required type="text" placeholder="Dr. Smith / Marcus" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-bold mb-1">Phone Number</label>
+                        <input id="modalPhone" required type="tel" placeholder="+1 (555) 000-0000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-bold mb-1">Business Email</label>
+                    <input id="modalEmail" required type="email" placeholder="owner@yourbusiness.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div id="trialSubmitStatus" class="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-xl hidden text-[11px]"></div>
+
+                <button id="trialSubmitBtn" type="submit" class="w-full bg-gradient-to-r from-blue-600 to-emerald-600 hover:brightness-110 text-white font-black text-xs py-3 rounded-xl shadow-lg shadow-blue-900/30 transition">
+                    Activate Workspace Now ($0 Today) &rarr;
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // =========================================================
+        // VIDEO PLAYER LOGIC & CHAPTER NAVIGATION
+        // =========================================================
+        let currentChapter = 0;
+        let isVideoPlaying = true;
+        let videoProgress = 25;
+        let videoSpeed = 1;
+        let videoInterval = null;
+
+        const chapterCaptions = [
+            "\"SitaOS 24/7 Neural Voice Receptionist answers in under 2 seconds, interrogates caller intent, and locks in the emergency appointment.\"",
+            "\"Live GPS Telemetry assigns the nearest technician and sends automatic turn-by-turn routes via WhatsApp to your field crew.\"",
+            "\"Mobile Clinicians and Contractors complete documentation on-site in 60 seconds with digital signed prescriptions and EHR history.\"",
+            "\"Stripe 1-click mobile terminal collects payment immediately at time of service, followed by automated 5-star Google review triggers.\""
+        ];
+
+        function jumpToChapter(idx) {
+            currentChapter = idx;
+            // Update scenes visibility
+            for (let i = 0; i < 4; i++) {
+                const sc = document.getElementById('videoScene-' + i);
+                const btn = document.getElementById('chapterBtn-' + i);
+                if (i === idx) {
+                    sc.classList.remove('opacity-0', 'pointer-events-none');
+                    sc.classList.add('opacity-100');
+                    btn.classList.add('active');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    sc.classList.add('opacity-0', 'pointer-events-none');
+                    sc.classList.remove('opacity-100');
+                    btn.classList.remove('active');
+                    btn.classList.add('text-slate-400');
+                }
+            }
+            // Update captions & progress
+            document.getElementById('videoCaptionText').innerText = chapterCaptions[idx];
+            videoProgress = (idx + 1) * 25;
+            document.getElementById('videoProgressBar').style.width = videoProgress + '%';
+
+            const times = ["00:35 / 02:20", "01:10 / 02:20", "01:45 / 02:20", "02:20 / 02:20"];
+            document.getElementById('videoTimerLabel').innerText = times[idx];
+        }
+
+        function toggleVideoPlayback() {
+            const btn = document.getElementById('playPauseBtn');
+            const status = document.getElementById('videoLiveStatus');
+            isVideoPlaying = !isVideoPlaying;
+            if (isVideoPlaying) {
+                btn.innerText = '⏸';
+                status.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>Playing Interactive Walkthrough</span>';
+                startVideoLoop();
+            } else {
+                btn.innerText = '▶';
+                status.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Paused</span>';
+                clearInterval(videoInterval);
+            }
+        }
+
+        function startVideoLoop() {
+            clearInterval(videoInterval);
+            videoInterval = setInterval(() => {
+                if (!isVideoPlaying) return;
+                currentChapter = (currentChapter + 1) % 4;
+                jumpToChapter(currentChapter);
+            }, 6000 / videoSpeed);
+        }
+
+        function setVideoSpeed(spd) {
+            videoSpeed = spd;
+            if (isVideoPlaying) startVideoLoop();
+        }
+
+        function seekVideoBar(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = clickX / rect.width;
+            const targetCh = Math.min(3, Math.floor(pct * 4));
+            jumpToChapter(targetCh);
+        }
+
+        let isCustomVideo = false;
+        function toggleVideoMode() {
+            const container = document.getElementById('customVideoContainer');
+            const btn = document.getElementById('videoModeToggleBtn');
+            isCustomVideo = !isCustomVideo;
+            if (isCustomVideo) {
+                container.classList.remove('hidden');
+                btn.innerText = 'Switch to Interactive Simulation';
+                clearInterval(videoInterval);
+            } else {
+                container.classList.add('hidden');
+                btn.innerText = 'Switch to Custom Video Embed';
+                if (isVideoPlaying) startVideoLoop();
+            }
+        }
+
+        // Initialize auto play
+        startVideoLoop();
+
+        // =========================================================
+        // SANDBOX TAB SWITCHER
+        // =========================================================
+        function switchDemo(tabKey) {
+            ['vet', 'contractor', 'phone'].forEach(k => {
+                document.getElementById('demo-view-' + k).classList.add('hidden');
+                document.getElementById('demo-tab-' + k).classList.remove('active');
+            });
+            document.getElementById('demo-view-' + tabKey).classList.remove('hidden');
+            document.getElementById('demo-tab-' + tabKey).classList.add('active');
+        }
+
+        // Vet Stopwatch Simulator
+        let timerRunning = false;
+        let seconds = 0;
+        let timerInterval = null;
+        function toggleVetTimer() {
+            const btn = document.getElementById('vetTimerBtn');
+            if (!timerRunning) {
+                timerRunning = true;
+                btn.innerText = 'Pause Stopwatch';
+                btn.className = 'w-full bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold py-2 rounded-xl transition';
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    let hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                    let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                    let secs = String(seconds % 60).padStart(2, '0');
+                    document.getElementById('vetTimer').innerText = `${hrs}:${mins}:${secs}`;
+                }, 1000);
+            } else {
+                timerRunning = false;
+                btn.innerText = 'Resume Stopwatch';
+                btn.className = 'w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2 rounded-xl transition';
+                clearInterval(timerInterval);
+            }
+        }
+        function resetVetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            seconds = 0;
+            document.getElementById('vetTimer').innerText = '00:00:00';
+            document.getElementById('vetTimerBtn').innerText = 'Start Consultation';
+            document.getElementById('vetTimerBtn').className = 'w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2 rounded-xl transition';
+        }
+
+        function generateFormula() {
+            document.getElementById('formulaMsg').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('formulaMsg').classList.add('hidden');
+            }, 4000);
+        }
+
+        function dispatchTech() {
+            const btn = document.getElementById('dispatchBtn');
+            btn.innerText = '✓ Tech Dispatched (En Route)';
+            btn.className = 'w-full bg-emerald-600 text-white text-xs font-bold py-2 rounded-xl';
+            document.getElementById('dispatchMsg').classList.remove('hidden');
+        }
+
+        function sendSimulatedReply() {
+            const input = document.getElementById('userReplyInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chat = document.getElementById('chatScreen');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex gap-2';
+            userMsg.innerHTML = `<div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%]"><span class="text-[10px] text-slate-400 font-bold block mb-1">YOU (CUSTOMER)</span>${text}</div>`;
+            chat.appendChild(userMsg);
+            input.value = '';
+
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'flex gap-2 justify-end';
+                aiMsg.innerHTML = `<div class="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%]"><span class="text-[10px] text-blue-200 font-bold block mb-1">⚡ SITAOS AI</span>"Got it! Mike is 15 minutes away in truck #04. I've sent a live tracker to your phone. See you shortly!"</div>`;
+                chat.appendChild(aiMsg);
+                chat.scrollTop = chat.scrollHeight;
+            }, 800);
+        }
+
+        // =========================================================
+        // ALPHA VISION METHOD DIAGNOSIS AUDIT LOGIC
+        // =========================================================
+        function runDiagnosisAudit() {
+            const vertical = document.getElementById('diagVertical').value;
+            const calls = parseInt(document.getElementById('diagCalls').value);
+            const speed = document.getElementById('diagSpeed').value;
+            
+            let score = 75;
+            if (speed === 'slow') score -= 35;
+            if (speed === 'medium') score -= 15;
+            if (calls > 100) score -= 10;
+
+            const estimatedLostJobs = Math.round(calls * 0.22);
+            const avgTicket = vertical === 'vet' ? 320 : (vertical === 'dental' ? 950 : 1250);
+            const monthlyBleed = estimatedLostJobs * avgTicket;
+
+            document.getElementById('diagScore').innerText = `${score} / 100`;
+            document.getElementById('diagBleed').innerText = `-$${monthlyBleed.toLocaleString()} / mo`;
+            document.getElementById('diagResultCard').classList.remove('hidden');
+        }
+
+        // =========================================================
+        // ROI CALCULATOR
+        // =========================================================
+        function calculateROI() {
+            const calls = parseInt(document.getElementById('callsSlider').value);
+            const missedPct = parseInt(document.getElementById('missedSlider').value);
+            const avgVal = parseInt(document.getElementById('valSlider').value);
+
+            document.getElementById('callCountLabel').innerText = calls + ' Calls';
+            const missedCalls = Math.round(calls * (missedPct / 100));
+            document.getElementById('missedPctLabel').innerText = `${missedPct}% (${missedCalls} Calls)`;
+            document.getElementById('valLabel').innerText = `$${avgVal} USD`;
+
+            const lostMonthly = missedCalls * avgVal;
+            const recovered = Math.round(lostMonthly * 0.60);
+            const systemCost = 497;
+            const multiplier = (recovered / systemCost).toFixed(1);
+
+            document.getElementById('lostRevDisplay').innerText = `$${lostMonthly.toLocaleString()} / mo`;
+            document.getElementById('recoveredDisplay').innerText = `+$${recovered.toLocaleString()} / mo`;
+            document.getElementById('roiMultiple').innerText = `${multiplier}x ROI`;
+        }
+
+        // =========================================================
+        // TRIAL MODAL LOGIC & SUBDOMAIN CREATION
+        // =========================================================
+        let activeProduct = 'service_business_os';
+        function openTrialModal(prodKey) {
+            activeProduct = prodKey;
+            document.getElementById('trialModal').classList.remove('hidden');
+        }
+        function closeTrialModal() {
+            document.getElementById('trialModal').classList.add('hidden');
+        }
+        function updateSubdomainPreview(val) {
+            const clean = val.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+            document.getElementById('subdomainPreview').innerText = clean || 'your-business';
+        }
+
+        async function handleTrialSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('trialSubmitBtn');
+            const status = document.getElementById('trialSubmitStatus');
+            btn.disabled = true;
+            btn.innerText = 'Creating Workspace in Supabase Core...';
+
+            const bizName = document.getElementById('modalBizName').value;
+            const name = document.getElementById('modalName').value;
+            const email = document.getElementById('modalEmail').value;
+            const phone = document.getElementById('modalPhone').value;
+            const subdomain = document.getElementById('subdomainPreview').innerText;
+
+            try {
+                const res = await fetch('/api/v1/tenants/provision', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        business_name: bizName,
+                        admin_name: name,
+                        admin_email: email,
+                        admin_phone: phone,
+                        subdomain: subdomain,
+                        product_id: activeProduct === 'rescue_bot' ? 'service_business_os' : activeProduct,
+                        plan_id: 'growth_tier',
+                        initial_seats: 5,
+                        enable_trial: true
+                    })
+                });
+                const data = await res.json();
+                status.className = 'p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs space-y-1';
+                status.innerHTML = `<strong>🎉 Workspace Activated Successfully!</strong><br>Subdomain: <code>https://${subdomain}.alphavisionm.com</code><br>We just sent your magic login link to <strong>${email}</strong>.`;
+                status.classList.remove('hidden');
+                btn.innerText = '✓ Workspace Ready';
+            } catch (err) {
+                status.className = 'p-3 bg-blue-500/10 border border-blue-500/30 text-blue-300 rounded-xl text-xs';
+                status.innerHTML = `<strong>Trial Registered!</strong> Check your email (${email}) for your instant access link.`;
+                status.classList.remove('hidden');
+                btn.innerText = '✓ Success';
+            }
+        }
+    </script>
+</body>
+</html>

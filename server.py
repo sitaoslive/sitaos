@@ -1272,6 +1272,22 @@ def render_onboarding_portal(customer_id: str):
 @app.get("/", response_class=HTMLResponse)
 def render_command_center():
     """
+    Renders the public High-Converting Landing Page with Live Interactive Video & Demo Simulator.
+    """
+    landing_path = os.path.join(os.path.dirname(__file__), "static", "landing.html")
+    if os.path.exists(landing_path):
+        with open(landing_path, "r", encoding="utf-8") as f:
+            return f.read()
+    index_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
+    if os.path.exists(index_path):
+        with open(index_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>SitaOS initializing...</h1>"
+
+@app.get("/app", response_class=HTMLResponse)
+@app.get("/admin", response_class=HTMLResponse)
+def render_admin_command_center():
+    """
     Renders the unified Executive Command Center Web UI.
     """
     index_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
