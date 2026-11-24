@@ -606,6 +606,98 @@ def submit_business_diagnosis_inquiry(req: BusinessDiagnosisInquiryRequest):
         }
     }
 
+class EmergencyCallSimulationRequest(BaseModel):
+    scenario: str = "contractor_hvac"  # contractor_hvac, vet_emergency, dental_pain, real_estate_buyer, medspa_booking
+    caller_message: Optional[str] = None
+    caller_phone: Optional[str] = "+1 (555) 349-8821"
+
+@app.post("/api/v1/simulations/emergency-test")
+def simulate_emergency_call(req: EmergencyCallSimulationRequest):
+    """
+    Simulates a live sub-2-second emergency voice/SMS call response for interactive landing page demos.
+    Returns real-time synthesized response transcript, speed-to-lead benchmark, and CRM action payload.
+    """
+    scenarios_data = {
+        "contractor_hvac": {
+            "default_msg": "Hi, my AC unit just blew smoke and stopped running, it's 95 degrees inside and we have a newborn baby.",
+            "response": "I hear you, and we're on it right now. We have emergency technician Mike 14 minutes away with a replacement capacitor and compressor diagnostic kit. I'm routing his truck to your home right now—can you confirm your street address?",
+            "job_value": 1250,
+            "vertical": "HVAC / Trade Contractor",
+            "assigned_unit": "Truck #04 (Mike R.)",
+            "eta_minutes": 14,
+            "speed_ms": 1780
+        },
+        "vet_emergency": {
+            "default_msg": "My golden retriever just ate a whole bar of dark chocolate and is vomiting, can someone come out?",
+            "response": "Stay calm, Dr. Morales is in Mobile Clinic 01 just 8 minutes away with an emergency toxicity flush kit. I've locked your visit into her GPS radar and notified her via WhatsApp. Keep your pet resting while she's en route!",
+            "job_value": 350,
+            "vertical": "Mobile Veterinary",
+            "assigned_unit": "Mobile Clinic 01 (Dr. Morales)",
+            "eta_minutes": 8,
+            "speed_ms": 1640
+        },
+        "dental_pain": {
+            "default_msg": "I have excruciating throbbing pain in my lower molar and my jaw is swelling up, do you have an emergency appointment?",
+            "response": "We have an emergency surgical slot open with Dr. Ross at 2:15 PM today. I've placed a temporary hold on this slot for you—let's get you in immediately before the infection spreads.",
+            "job_value": 1800,
+            "vertical": "Dental & Oral Surgery",
+            "assigned_unit": "Operatory 2 (Dr. Julian Ross)",
+            "eta_minutes": 45,
+            "speed_ms": 1820
+        },
+        "real_estate_buyer": {
+            "default_msg": "Hi, I'm calling about the luxury listing on Ocean Drive, is it possible to schedule a walkthrough this afternoon?",
+            "response": "Yes, absolutely! The listing agent Marcus is finishing a nearby private tour and can meet you at 4:30 PM. I've sent the property disclosure pack and entry gate code directly to your phone.",
+            "job_value": 43500,
+            "vertical": "Real Estate Brokerage",
+            "assigned_unit": "Agent Marcus Vance",
+            "eta_minutes": 90,
+            "speed_ms": 1720
+        },
+        "medspa_booking": {
+            "default_msg": "Do you have any openings for Morpheus8 or CoolSculpting consults this week?",
+            "response": "Yes! We have two aesthetic consultation slots available with Nurse Practitioner Elena this Thursday at 11 AM or 3 PM. I'm texting you our direct VIP consultation booking link now.",
+            "job_value": 1500,
+            "vertical": "Medical Aesthetics / MedSpa",
+            "assigned_unit": "Elena R., NP",
+            "eta_minutes": 120,
+            "speed_ms": 1690
+        }
+    }
+
+    sc = scenarios_data.get(req.scenario, scenarios_data["contractor_hvac"])
+    caller_msg = req.caller_message or sc["default_msg"]
+    ai_response = sc["response"]
+
+    # Keyword adaptation if custom user message provided
+    if req.caller_message:
+        msg_lower = req.caller_message.lower()
+        if "dog" in msg_lower or "cat" in msg_lower or "pet" in msg_lower or "vet" in msg_lower:
+            ai_response = f"I understand! Dr. Morales is in Mobile Clinic 01 with emergency veterinary equipment and can be dispatched immediately. Let's get your pet taken care of right now."
+        elif "tooth" in msg_lower or "teeth" in msg_lower or "dental" in msg_lower or "pain" in msg_lower:
+            ai_response = f"We take severe dental emergencies very seriously. Dr. Ross has an emergency operatory slot open today—I am holding it for you right now."
+        elif "ac" in msg_lower or "leak" in msg_lower or "pipe" in msg_lower or "roof" in msg_lower or "heat" in msg_lower:
+            ai_response = f"Got it! We have field technician Mike 15 minutes away with repair equipment. I've flagged this emergency dispatch as top priority."
+
+    return {
+        "success": True,
+        "caller_phone": req.caller_phone,
+        "caller_message": caller_msg,
+        "ai_response": ai_response,
+        "speed_to_lead_seconds": round(sc["speed_ms"] / 1000, 2),
+        "speed_ms": sc["speed_ms"],
+        "vertical": sc["vertical"],
+        "assigned_unit": sc["assigned_unit"],
+        "eta_minutes": sc["eta_minutes"],
+        "estimated_job_value": sc["job_value"],
+        "crm_event": {
+            "source": "SitaOS Neural Voice Engine",
+            "status": "QUALIFIED_AND_DISPATCHED",
+            "pipeline": "Emergency Service Calls",
+            "whatsapp_status": "DISPATCH_PACK_SENT"
+        }
+    }
+
 class GHLHumanTakeoverRequest(BaseModel):
     contact_id: str
     action: str = "ENGAGE"  # ENGAGE or RELEASE
@@ -842,7 +934,7 @@ def render_vet_life_demo(token: str):
                 <button onclick="recordModule('1. Rastreo GPS Flota')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">📍 GPS Auxiliares</button>
                 <button onclick="recordModule('2. Cronómetro Consulta')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">⏱️ Cronómetro Consulta</button>
                 <button onclick="recordModule('3. Fórmulas Médicas OKVET')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">📋 Fórmulas OKVET</button>
-                <a href="/onboard/cust_new_trial_vet" target="_blank" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg shadow transition">Activar Prueba 30 Días &rarr;</a>
+                <a href="/#pricing" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-1.5 rounded-lg shadow transition">⚡ Reclamar Subdominio y Prueba ($0 Hoy) &rarr;</a>
             </div>
         </header>
 
@@ -1012,7 +1104,7 @@ def render_service_os_demo(token: str):
                 <button onclick="recordModule('Live Dispatch Radar')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">📍 Live Dispatch Radar</button>
                 <button onclick="recordModule('Field Tech Punch-Clock')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">⏱️ Tech Punch-Clock</button>
                 <button onclick="recordModule('15-Sec Missed Call SMS')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-700 transition">📞 15-Sec Lead Capture</button>
-                <a href="/onboard/cust_new_contractor" target="_blank" class="text-xs bg-amber-500 hover:bg-amber-400 text-black font-bold px-4 py-1.5 rounded-lg shadow transition">Start 14-Day Free Trial &rarr;</a>
+                <a href="/#pricing" class="text-xs bg-amber-500 hover:bg-amber-400 text-black font-black px-4 py-1.5 rounded-lg shadow transition">⚡ Claim Custom Subdomain ($0 Today) &rarr;</a>
             </div>
         </header>
 

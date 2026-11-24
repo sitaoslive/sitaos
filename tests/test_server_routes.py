@@ -133,6 +133,16 @@ def test_endpoint_business_diagnosis_inquiry():
     assert "https://alphavisionmethod.com/vsl" in res["funnel_url"]
     assert "dental" in res["speed_to_lead_draft"]["subject"].lower() or "patient" in res["speed_to_lead_draft"]["subject"].lower()
 
+def test_endpoint_emergency_call_simulation():
+    from server import simulate_emergency_call, EmergencyCallSimulationRequest
+    req = EmergencyCallSimulationRequest(scenario="contractor_hvac")
+    res = simulate_emergency_call(req)
+    assert res["success"] is True
+    assert res["speed_to_lead_seconds"] < 2.0
+    assert "Mike" in res["ai_response"]
+    assert res["estimated_job_value"] == 1250
+    assert res["crm_event"]["status"] == "QUALIFIED_AND_DISPATCHED"
+
 def test_endpoint_commercial_workflows():
     res = get_commercial_workflows()
     assert res["total_workflows"] == 35
