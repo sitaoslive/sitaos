@@ -1579,6 +1579,17 @@ def render_whatsapp_integration_center():
     </html>
     """
 
+@app.get("/academy", response_class=HTMLResponse)
+def render_academy():
+    """
+    Renders the SitaOS Operations, Error Checking & $50k/Mo Sales Academy.
+    """
+    academy_path = os.path.join(os.path.dirname(__file__), "static", "academy.html")
+    if os.path.exists(academy_path):
+        with open(academy_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>SitaOS Operations Academy loading...</h1>"
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)

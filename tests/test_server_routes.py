@@ -103,6 +103,13 @@ def test_render_command_center_html():
     assert "Alpha Vision AI Sales OS" in html
     assert "Executive Command Center" in html
 
+def test_render_academy_html():
+    from server import render_academy
+    html = render_academy()
+    assert "SitaOS Operations Academy" in html
+    assert "Module 1: What We Sell" in html
+    assert "Live System Health & Error Inspector" in html
+
 def test_endpoint_commercial_workflows():
     res = get_commercial_workflows()
     assert res["total_workflows"] == 35

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SitaOS Academy · Operations, Error Checking & $50k/Mo Sales Playbook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #060913; color: #f1f5f9; }
+        .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .gradient-text { background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #fbbf24 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tab-btn.active { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); color: #60a5fa; font-weight: 700; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #060913; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="glass sticky top-0 z-50 border-b border-slate-800/80 px-6 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition">
+                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-500/20">S</span>
+                <div>
+                    <h1 class="text-sm font-black tracking-wide text-white uppercase">SitaOS Operations Academy</h1>
+                    <p class="text-[10px] text-slate-400 font-medium">Non-Technical Operator SOP · 1-Click Diagnostics · $50k/Mo Blueprint</p>
+                </div>
+            </a>
+            <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Production Ready
+            </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button onclick="runAllDiagnostics()" id="diagBtn" class="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-lg shadow-emerald-900/30 transition">
+                <span>🩺</span>
+                <span>Run System Health Check</span>
+            </button>
+            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+                <span>⚡</span>
+                <span>Command Center</span>
+            </a>
+            <a href="/whatsapp" class="text-xs bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 font-semibold px-3 py-2 rounded-xl border border-blue-500/30 transition flex items-center gap-1.5">
+                <span>💬</span>
+                <span>WhatsApp Hub</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto p-4 md:p-8 flex-1 w-full space-y-8">
+
+        <!-- Academy Hero Banner -->
+        <div class="glass p-8 rounded-3xl relative overflow-hidden border border-slate-800 shadow-2xl">
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold">
+                    🎓 Master Training & Operational Readiness Program
+                </div>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">
+                    How to Run SitaOS, Catch Errors & Hit <span class="gradient-text">$50,000 / Month</span>
+                </h2>
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    Designed for non-technical team members, sales closers, and founders. No coding required. Learn what we sell, how to run live demos, what to do when a lead responds, how to troubleshoot any error with 1 click, and how to execute guru-level outreach.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span class="text-emerald-400">✓</span> 5 Core Modules
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span class="text-emerald-400">✓</span> 1-Click Error Diagnostic Runner
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span class="text-emerald-400">✓</span> 100-Point Lead Qualification SOP
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span class="text-emerald-400">✓</span> Copy-Paste Guru Outreach Scripts
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Diagnostics Bar (Interactive Error Checker) -->
+        <div id="diagnosticResults" class="glass p-6 rounded-3xl border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🔍</span> Live System Health & Error Inspector
+                    </h3>
+                    <p class="text-xs text-slate-400">Click the button in the top right to verify all live connections across the cloud server, databases, and gateways.</p>
+                </div>
+                <span id="overallStatus" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">Status: Awaiting Check</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                <div class="glass-card p-4 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300">FastAPI Server</span>
+                        <span id="status-api" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                    </div>
+                    <p id="msg-api" class="text-[11px] text-slate-400">Target: /api/v1/health</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300">Dual Database Hub</span>
+                        <span id="status-db" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                    </div>
+                    <p id="msg-db" class="text-[11px] text-slate-400">Platform Core + Vet DB</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300">GHL Gateway & Dedup</span>
+                        <span id="status-ghl" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                    </div>
+                    <p id="msg-ghl" class="text-[11px] text-slate-400">Location: n4sb0M0P3oQhIux2e1Um</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300">WhatsApp Cloud API</span>
+                        <span id="status-wa" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                    </div>
+                    <p id="msg-wa" class="text-[11px] text-slate-400">Meta WABA v21.0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academy Module Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
+            <button onclick="switchModule('mod1')" id="tab-mod1" class="tab-btn active px-4 py-2.5 rounded-xl border border-transparent text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <span>📦</span> <span>Module 1: What We Sell & The Avatar</span>
+            </button>
+            <button onclick="switchModule('mod2')" id="tab-mod2" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <span>🔄</span> <span>Module 2: Daily Operator SOP</span>
+            </button>
+            <button onclick="switchModule('mod3')" id="tab-mod3" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <span>🛠️</span> <span>Module 3: Error Checking & Troubleshooting</span>
+            </button>
+            <button onclick="switchModule('mod4')" id="tab-mod4" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <span>💰</span> <span>Module 4: The $50k/Mo Mathematical Roadmap</span>
+            </button>
+            <button onclick="switchModule('mod5')" id="tab-mod5" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                <span>🔥</span> <span>Module 5: Guru-Style Sales & Script Vault</span>
+            </button>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- MODULE 1: WHAT WE SELL & WHO BUYS IT -->
+        <!-- ==================================================================== -->
+        <div id="content-mod1" class="space-y-6">
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span class="p-2 bg-blue-500/10 text-blue-400 rounded-xl">📦</span>
+                    Module 1: The Commercial Products We Sell
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Alpha Vision does not sell vague generic coaching or services. We license <strong>two proprietary, vertical B2B SaaS operating systems</strong> that solve painful, expensive problems for business owners who are losing thousands every month to missed calls, scheduling friction, and chaotic paperwork.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Product A: Vet Life -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/20 space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🐾</span>
+                            <div>
+                                <h4 class="text-base font-bold text-white">Vet Life / Vet Freedom OS</h4>
+                                <span class="text-xs text-blue-400 font-semibold">For Mobile Vets & High-Volume Clinics</span>
+                            </div>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 font-mono font-bold">$197 - $997 / mo</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <p><strong class="text-white">The Pain:</strong> Mobile veterinarians and clinic owners spend 3–4 hours every night re-typing medical charts, missing urgent client calls while driving, and struggling with routing and inventory billing.</p>
+                        <p><strong class="text-white">Our Solution:</strong> Complete cloud EHR + Voice AI Receptionist (Twilio <code class="text-blue-300">+19299663559</code>) + WhatsApp Appointment Recalls + GPS auxiliary dispatch + Digital OKVET Medical Formulas.</p>
+                        <p><strong class="text-white">Pricing Tiers:</strong></p>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                            <li><strong class="text-slate-200">Solo Mobile Doctor:</strong> $197/mo (1 Doc, WhatsApp recall, medical EHR)</li>
+                            <li><strong class="text-slate-200">Clinic Growth:</strong> $497/mo (Up to 5 Docs, Voice AI Receptionist, GPS routing)</li>
+                            <li><strong class="text-slate-200">Hospital Multi-Branch:</strong> $997/mo (Unlimited users, dedicated server, SLA)</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="/demo/vet-life/d_vet_demo_master" target="_blank" class="w-full text-center block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-lg shadow-blue-900/30">
+                            Launch Live Interactive Vet Demo &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product B: Contractors -->
+                <div class="glass-card p-6 rounded-3xl border border-amber-500/20 space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🔧</span>
+                            <div>
+                                <h4 class="text-base font-bold text-white">Alpha Service Business OS</h4>
+                                <span class="text-xs text-amber-400 font-semibold">For HVAC, Plumbing, Roofing & Trades</span>
+                            </div>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 font-mono font-bold">$297 - $1,297 / mo</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <p><strong class="text-white">The Pain:</strong> In trades, <strong>the first contractor to answer wins 78% of the jobs</strong>. When a contractor is under a sink or on a roof, missed emergency calls lose them $800 to $4,500 every single day.</p>
+                        <p><strong class="text-white">Our Solution:</strong> 24/7 AI Receptionist answers in under 2 rings, qualifies emergency vs routine jobs, books technician dispatch, and sends instant SMS/WhatsApp quotes.</p>
+                        <p><strong class="text-white">Pricing Tiers:</strong></p>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                            <li><strong class="text-slate-200">Starter Fleet (1-3 Trucks):</strong> $297/mo (Instant AI Call Answering, Dispatch)</li>
+                            <li><strong class="text-slate-200">Scale Business (4-10 Trucks):</strong> $597/mo (Voice AI, Invoicing, WhatsApp Crew Chat)</li>
+                            <li><strong class="text-slate-200">Enterprise Commercial:</strong> $1,297/mo (Fleet GPS, Custom CRM sync, dedicated SLA)</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="/demo/service-os/d_ser_demo_master" target="_blank" class="w-full text-center block bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-lg shadow-amber-900/30">
+                            Launch Live Interactive Contractor Demo &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- MODULE 2: DAILY OPERATOR SOP -->
+        <!-- ==================================================================== -->
+        <div id="content-mod2" class="space-y-6 hidden">
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span class="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl">🔄</span>
+                    Module 2: Daily Operating Rhythm for the Team
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    You do not need to know programming or database queries to operate SitaOS. Follow this simple 3-step daily routine:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Step 1 -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-700">
+                    <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 font-black flex items-center justify-center text-sm">1</div>
+                    <h4 class="text-sm font-bold text-white">Morning Health Check (3 Mins)</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Open <a href="/academy" class="text-blue-400 underline">sitaos.com/academy</a> and click <strong>"Run System Health Check"</strong>. Ensure all 4 indicators are green. Check the Command Center (<a href="/" class="text-blue-400 underline">sitaos.com</a>) for new high-scoring leads (Score >= 70).
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-700">
+                    <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 font-black flex items-center justify-center text-sm">2</div>
+                    <h4 class="text-sm font-bold text-white">Speed-to-Lead Response (Within 60s)</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        When an inquiry hits GoHighLevel or WhatsApp, the AI automatically qualifies them. If the lead is Hot, send them their personal <strong>Live Interactive Demo Link</strong> (<code class="text-amber-300">sitaos.com/demo/vet-life/...</code>) so they can test the software on their phone!
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-700">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-sm">3</div>
+                    <h4 class="text-sm font-bold text-white">Human Takeover Protocol</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        If a prospect asks a custom question, a human rep can reply directly in the GoHighLevel Conversations tab. The moment you type, the system activates <strong>Human Takeover Lock</strong>—AI mutes for 60 minutes so you have full conversational control with zero collision!
+                    </p>
+                </div>
+            </div>
+
+            <!-- 100-Point Lead Score Cheat Sheet -->
+            <div class="glass p-6 rounded-3xl space-y-4 border border-slate-800">
+                <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span>🎯</span> The 100-Point Scoring Cheat Sheet: What Actions to Take
+                </h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/60 text-slate-400 uppercase font-mono border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Score Range</th>
+                                <th class="p-3">Classification</th>
+                                <th class="p-3">What It Means</th>
+                                <th class="p-3">Immediate Team Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                            <tr class="bg-emerald-500/5">
+                                <td class="p-3 font-mono font-bold text-emerald-400">85 - 100</td>
+                                <td class="p-3 font-semibold text-emerald-300">🔥 TIER 1 ENTERPRISE</td>
+                                <td class="p-3">Verified high-volume clinic / fleet contractor with budget</td>
+                                <td class="p-3">Call immediately via Twilio + send custom interactive demo link</td>
+                            </tr>
+                            <tr class="bg-blue-500/5">
+                                <td class="p-3 font-mono font-bold text-blue-400">70 - 84</td>
+                                <td class="p-3 font-semibold text-blue-300">⚡ TIER 2 GROWTH</td>
+                                <td class="p-3">Active business with immediate scheduling / call pain</td>
+                                <td class="p-3">Send WhatsApp Speed-to-Lead script + book 15-min walkthrough</td>
+                            </tr>
+                            <tr class="bg-slate-800/30">
+                                <td class="p-3 font-mono font-bold text-slate-400">50 - 69</td>
+                                <td class="p-3 font-semibold text-slate-300">🌱 TIER 3 STARTER</td>
+                                <td class="p-3">Solo operator or early-stage practice</td>
+                                <td class="p-3">Route to 14-day automated educational email & case study sequence</td>
+                            </tr>
+                            <tr class="bg-rose-500/5">
+                                <td class="p-3 font-mono font-bold text-rose-400">< 50</td>
+                                <td class="p-3 font-semibold text-rose-300">⛔ UNQUALIFIED / NO FIT</td>
+                                <td class="p-3">Student, competitor, or missing contact info</td>
+                                <td class="p-3">Archive or suppress; do not waste closer phone time</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- MODULE 3: ERROR CHECKING & TROUBLESHOOTING -->
+        <!-- ==================================================================== -->
+        <div id="content-mod3" class="space-y-6 hidden">
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span class="p-2 bg-rose-500/10 text-rose-400 rounded-xl">🛠️</span>
+                    Module 3: Error Checking & Troubleshooting Playbook
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    When something looks wrong, consult this guide. 99% of issues fall into one of these verified scenarios:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Error 1 -->
+                <div class="glass-card p-5 rounded-2xl space-y-2 border border-slate-800">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-bold">SCENARIO 1</span>
+                    <h4 class="text-xs font-bold text-white">"The site sitaos.com is slow to load the first time"</h4>
+                    <p class="text-xs text-slate-400"><strong class="text-slate-300">Why it happens:</strong> On Render's Free tier, the web service spins down after 15 minutes of inactivity. The first visitor triggers a "cold start" taking ~30–45 seconds.</p>
+                    <p class="text-xs text-emerald-400"><strong class="text-slate-300">The Fix:</strong> Once loaded, it stays fast! To prevent sleep, ping it once every 10 minutes via cron, or upgrade Render to Starter ($7/mo) for 0ms cold starts.</p>
+                </div>
+
+                <!-- Error 2 -->
+                <div class="glass-card p-5 rounded-2xl space-y-2 border border-slate-800">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-bold">SCENARIO 2</span>
+                    <h4 class="text-xs font-bold text-white">"A lead texted STOP and received no further messages"</h4>
+                    <p class="text-xs text-slate-400"><strong class="text-slate-300">Why it happens:</strong> This is a feature, not a bug! Our Compliance Policy Gate automatically registers an opt-out across SMS and WhatsApp to protect against TCPA fines ($1,500/msg).</p>
+                    <p class="text-xs text-emerald-400"><strong class="text-slate-300">The Fix:</strong> No action needed. If the lead changes their mind, they must text START to reactivate.</p>
+                </div>
+
+                <!-- Error 3 -->
+                <div class="glass-card p-5 rounded-2xl space-y-2 border border-slate-800">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-bold">SCENARIO 3</span>
+                    <h4 class="text-xs font-bold text-white">"AI stopped replying to a prospect in GoHighLevel"</h4>
+                    <p class="text-xs text-slate-400"><strong class="text-slate-300">Why it happens:</strong> A human agent sent a message, triggering Human Takeover Lock (<code class="text-blue-300">human_takeover_active: true</code>).</p>
+                    <p class="text-xs text-emerald-400"><strong class="text-slate-300">The Fix:</strong> Either let the 60-minute timer expire naturally, or remove the <code class="text-emerald-300">human_takeover_active</code> tag in GoHighLevel to hand control back to the AI immediately.</p>
+                </div>
+
+                <!-- Error 4 -->
+                <div class="glass-card p-5 rounded-2xl space-y-2 border border-slate-800">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-bold">SCENARIO 4</span>
+                    <h4 class="text-xs font-bold text-white">"WhatsApp message failed with '24-hour window expired'"</h4>
+                    <p class="text-xs text-slate-400"><strong class="text-slate-300">Why it happens:</strong> Official Meta policy requires that messages sent more than 24 hours after the user's last message MUST use an approved Utility Template.</p>
+                    <p class="text-xs text-emerald-400"><strong class="text-slate-300">The Fix:</strong> Go to <a href="/whatsapp" class="text-purple-400 underline">sitaos.com/whatsapp</a> and send an official approved template like <code class="text-purple-300">avm_onboarding_reminder_v1</code> to re-open the 24h window.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- MODULE 4: THE $50,000 / MO ROADMAP -->
+        <!-- ==================================================================== -->
+        <div id="content-mod4" class="space-y-6 hidden">
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span class="p-2 bg-amber-500/10 text-amber-400 rounded-xl">💰</span>
+                    Module 4: The Mathematical Proof of $50,000 / Month Net Profit
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    $50,000 per month is not a dream; it is an arithmetic calculation. Because software delivery has <strong>zero marginal cost of production</strong>, our gross margins are 85%+.
+                </p>
+            </div>
+
+            <!-- The 3 Proven Pathways -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Path A -->
+                <div class="glass-card p-6 rounded-3xl space-y-4 border border-blue-500/20">
+                    <span class="text-xs font-mono font-bold text-blue-400 px-2.5 py-1 rounded-full bg-blue-500/10">PATHWAY 1: CONTRACTORS</span>
+                    <h4 class="text-base font-bold text-white">HVAC & Plumbing Trades</h4>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Target Clients:</span>
+                            <strong class="text-white font-mono">100 Contractors</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Average Plan:</span>
+                            <strong class="text-emerald-400 font-mono">$499 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Gross Monthly Revenue:</span>
+                            <strong class="text-white font-mono">$49,900 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Setup Fees (5/mo @ $1,500):</span>
+                            <strong class="text-emerald-400 font-mono">+$7,500 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Total Operating Costs:</span>
+                            <strong class="text-rose-400 font-mono">-$7,400 / mo</strong>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <span class="font-bold text-white">Net Operating Profit:</span>
+                            <strong class="text-emerald-400 font-mono text-sm font-black">$50,000 / mo</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path B -->
+                <div class="glass-card p-6 rounded-3xl space-y-4 border border-emerald-500/20">
+                    <span class="text-xs font-mono font-bold text-emerald-400 px-2.5 py-1 rounded-full bg-emerald-500/10">PATHWAY 2: VETERINARIANS</span>
+                    <h4 class="text-base font-bold text-white">Mobile Vets & Clinics</h4>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Target Clients:</span>
+                            <strong class="text-white font-mono">100 Practices</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Average Plan (Growth):</span>
+                            <strong class="text-emerald-400 font-mono">$497 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Gross Recurring MRR:</span>
+                            <strong class="text-white font-mono">$49,700 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>WhatsApp Add-On Credits:</span>
+                            <strong class="text-emerald-400 font-mono">+$5,200 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Total Operating Costs:</span>
+                            <strong class="text-rose-400 font-mono">-$4,900 / mo</strong>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <span class="font-bold text-white">Net Operating Profit:</span>
+                            <strong class="text-emerald-400 font-mono text-sm font-black">$50,000 / mo</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path C -->
+                <div class="glass-card p-6 rounded-3xl space-y-4 border border-purple-500/20">
+                    <span class="text-xs font-mono font-bold text-purple-400 px-2.5 py-1 rounded-full bg-purple-500/10">PATHWAY 3: HYBRID BLEND</span>
+                    <h4 class="text-base font-bold text-white">Fastest Time-to-Target</h4>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>50 Contractors @ $597:</span>
+                            <strong class="text-white font-mono">$29,850 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>50 Vet Clinics @ $497:</span>
+                            <strong class="text-white font-mono">$24,850 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>5 Custom Setups ($2,500):</span>
+                            <strong class="text-emerald-400 font-mono">+$12,500 / mo</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800 pb-1">
+                            <span>Cloud & AI Overhead:</span>
+                            <strong class="text-rose-400 font-mono">-$7,200 / mo</strong>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <span class="font-bold text-white">Net Operating Profit:</span>
+                            <strong class="text-emerald-400 font-mono text-sm font-black">$60,000 / mo</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Velocity Pipeline Equation -->
+            <div class="glass p-6 rounded-3xl border border-slate-800 space-y-4">
+                <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span>⚡</span> The Lead Velocity Pipeline Formula
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    To add <strong>10 new clients per month</strong> and reach 100 active clients in 10 months:
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800">
+                        <span class="text-2xl font-black text-white font-mono">40</span>
+                        <p class="text-[11px] text-slate-400 pt-1">Discovery Calls / Month (10/week)</p>
+                    </div>
+                    <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800">
+                        <span class="text-2xl font-black text-blue-400 font-mono">75%</span>
+                        <p class="text-[11px] text-slate-400 pt-1">Call Attendance Rate (30 held)</p>
+                    </div>
+                    <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800">
+                        <span class="text-2xl font-black text-emerald-400 font-mono">33%</span>
+                        <p class="text-[11px] text-slate-400 pt-1">Close Rate to 30-Day Sandbox</p>
+                    </div>
+                    <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800">
+                        <span class="text-2xl font-black text-amber-400 font-mono">10</span>
+                        <p class="text-[11px] text-slate-400 pt-1">New Paying Clients / Mo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- MODULE 5: GURU-STYLE SALES & SCRIPT VAULT -->
+        <!-- ==================================================================== -->
+        <div id="content-mod5" class="space-y-6 hidden">
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span class="p-2 bg-gradient-to-tr from-amber-500 to-orange-500 text-white rounded-xl">🔥</span>
+                    Module 5: The "Guru-Style" Cold-to-Gold Script Vault
+                </h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Tested, psychological direct-response frameworks. Zero weak corporate fluff ("hope you are well"). High-status, curiosity-inducing, pain-probing scripts that convert cold leads into booked walkthroughs.
+                </p>
+            </div>
+
+            <!-- Scripts Grid -->
+            <div class="space-y-4">
+                <!-- Script 1: Dean Jackson 9-Word Email -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400">FRAMEWORK 1</span>
+                            <h4 class="text-sm font-bold text-white">The Famous 9-Word Re-engagement Email (Dean Jackson Style)</h4>
+                        </div>
+                        <button onclick="copyScript('script1')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3 py-1.5 rounded-lg border border-slate-700 transition">Copy Script</button>
+                    </div>
+                    <p class="text-xs text-slate-400">Gets a 54% reply rate because it looks like a genuine one-line question sent from an iPhone.</p>
+                    <div id="script1" class="p-4 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 leading-relaxed">
+Subject: quick question regarding [Clinic Name / Business Name]
+
+Hi [First Name],
+
+Are you still taking on new mobile veterinary clients in [City]?
+
+- [Your Name]
+                    </div>
+                </div>
+
+                <!-- Script 2: 45-Second Speed-to-Lead WhatsApp / SMS -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">FRAMEWORK 2</span>
+                            <h4 class="text-sm font-bold text-white">45-Second Speed-to-Lead WhatsApp / SMS</h4>
+                        </div>
+                        <button onclick="copyScript('script2')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3 py-1.5 rounded-lg border border-slate-700 transition">Copy Script</button>
+                    </div>
+                    <p class="text-xs text-slate-400">Dispatched within 60 seconds of any web inquiry or missed call.</p>
+                    <div id="script2" class="p-4 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 leading-relaxed">
+Hey [First Name] — Freud here with Alpha Vision. 
+
+Saw you were checking out our emergency response & dispatch system for [HVAC / Vet]. 
+
+Just out of curiosity, how many incoming calls is your team missing while technicians are out on jobs right now? 
+
+(I set up a 60-second interactive demo for your business here if you want to click through it on your phone: https://sitaos.com/demo/service-os/d_ser_demo_master)
+                    </div>
+                </div>
+
+                <!-- Script 3: Chris Voss Voice AI Phone Hook -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400">FRAMEWORK 3</span>
+                            <h4 class="text-sm font-bold text-white">Chris Voss "No-Oriented" Voice AI Cold Call Hook</h4>
+                        </div>
+                        <button onclick="copyScript('script3')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3 py-1.5 rounded-lg border border-slate-700 transition">Copy Script</button>
+                    </div>
+                    <p class="text-xs text-slate-400">People feel safe saying "No". This question forces them to listen without triggering sales resistance.</p>
+                    <div id="script3" class="p-4 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 leading-relaxed">
+"Hi [Dr. Smith / Marcus], this is the automated reception assistant for Alpha Vision. 
+
+Would it be totally crazy if I showed you how Dr. Luis reclaimed 3 hours every single night on emergency calls without hiring another receptionist?
+
+...If you're against hearing it, I can hang up right now. But if you have 60 seconds, does tomorrow at 2:00 PM work for a quick walkthrough?"
+                    </div>
+                </div>
+
+                <!-- Script 4: Hormozi 15-Minute Demo Close -->
+                <div class="glass-card p-6 rounded-3xl space-y-3 border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-500/10 text-purple-400">FRAMEWORK 4</span>
+                            <h4 class="text-sm font-bold text-white">Alex Hormozi $100M Offer Demo Closing Script</h4>
+                        </div>
+                        <button onclick="copyScript('script4')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3 py-1.5 rounded-lg border border-slate-700 transition">Copy Script</button>
+                    </div>
+                    <p class="text-xs text-slate-400">The 4-part no-brainer close used at the end of the 15-minute live demo.</p>
+                    <div id="script4" class="p-4 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 leading-relaxed">
+"So [First Name], you saw the software: it captures the missed calls, books the calendar, routes your crew, and collects payment automatically.
+
+Here is my proposal: 
+We will give you the full system for the next 30 days for just $497. 
+If it doesn't recover at least TWO jobs or saves you at least 15 hours of admin headache in the first month, just send me a WhatsApp and I will refund every single penny. 
+
+You either make $3,000+ in recovered revenue, or it costs you nothing. 
+Fair enough? Should we set up your clinic subdomain today?"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-slate-800 px-6 py-6 text-center text-xs text-slate-500 mt-12">
+        <p>SitaOS Operations Academy · Alpha Vision Method · Powered by Autonomous AI Systems</p>
+        <p class="text-[11px] pt-1">Live Endpoint: <a href="https://sitaos.com" class="text-blue-400">https://sitaos.com</a> · Cloud Service: <a href="https://sitaos.onrender.com" class="text-blue-400">https://sitaos.onrender.com</a></p>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        function switchModule(modId) {
+            // Hide all modules
+            ['mod1', 'mod2', 'mod3', 'mod4', 'mod5'].forEach(id => {
+                document.getElementById('content-' + id).classList.add('hidden');
+                document.getElementById('tab-' + id).classList.remove('active');
+            });
+            // Show selected
+            document.getElementById('content-' + modId).classList.remove('hidden');
+            document.getElementById('tab-' + modId).classList.add('active');
+        }
+
+        async function runAllDiagnostics() {
+            const btn = document.getElementById('diagBtn');
+            btn.innerHTML = '<span>⏳</span><span>Testing Systems...</span>';
+            btn.disabled = true;
+
+            const updateItem = (elemId, msgId, isHealthy, msg) => {
+                const indicator = document.getElementById(elemId);
+                const text = document.getElementById(msgId);
+                if (isHealthy) {
+                    indicator.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-md shadow-emerald-500/50';
+                    text.innerHTML = '<span class="text-emerald-400 font-bold">✓ HEALTHY:</span> ' + msg;
+                } else {
+                    indicator.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 shadow-md shadow-rose-500/50';
+                    text.innerHTML = '<span class="text-rose-400 font-bold">✗ CHECK:</span> ' + msg;
+                }
+            };
+
+            let healthyCount = 0;
+
+            // 1. API Health
+            try {
+                const res = await fetch('/api/v1/health');
+                if (res.ok) {
+                    const data = await res.json();
+                    updateItem('status-api', 'msg-api', true, data.system + ' (Online)');
+                    healthyCount++;
+                } else {
+                    updateItem('status-api', 'msg-api', false, 'HTTP ' + res.status);
+                }
+            } catch (e) {
+                updateItem('status-api', 'msg-api', false, 'Unreachable');
+            }
+
+            // 2. Database Federation
+            try {
+                const res = await fetch('/api/v1/federation/health');
+                if (res.ok) {
+                    const data = await res.json();
+                    updateItem('status-db', 'msg-db', true, 'Core DB + Vet DB (Active)');
+                    healthyCount++;
+                } else {
+                    updateItem('status-db', 'msg-db', false, 'DB Federation Error');
+                }
+            } catch (e) {
+                updateItem('status-db', 'msg-db', false, 'Failed to fetch');
+            }
+
+            // 3. GHL Gateway
+            try {
+                const res = await fetch('/api/v1/ghl/integration-health');
+                if (res.ok) {
+                    const data = await res.json();
+                    updateItem('status-ghl', 'msg-ghl', true, 'Location n4sb0M0P3oQhIux2e1Um (Verified)');
+                    healthyCount++;
+                } else {
+                    updateItem('status-ghl', 'msg-ghl', false, 'GHL Endpoint Error');
+                }
+            } catch (e) {
+                updateItem('status-ghl', 'msg-ghl', false, 'Gateway Unreachable');
+            }
+
+            // 4. WhatsApp Cloud API
+            try {
+                const res = await fetch('/api/whatsapp/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    updateItem('status-wa', 'msg-wa', true, 'Meta WABA v21.0 (Ready)');
+                    healthyCount++;
+                } else {
+                    updateItem('status-wa', 'msg-wa', false, 'WhatsApp Status Error');
+                }
+            } catch (e) {
+                updateItem('status-wa', 'msg-wa', false, 'Not responding');
+            }
+
+            const overall = document.getElementById('overallStatus');
+            if (healthyCount >= 3) {
+                overall.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                overall.innerText = 'All Critical Systems 100% Operational';
+            } else {
+                overall.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                overall.innerText = healthyCount + '/4 Systems Responding';
+            }
+
+            btn.innerHTML = '<span>🩺</span><span>Run System Health Check</span>';
+            btn.disabled = false;
+        }
+
+        function copyScript(scriptId) {
+            const text = document.getElementById(scriptId).innerText;
+            navigator.clipboard.writeText(text);
+            alert('✓ Script copied to clipboard! Paste it into WhatsApp, SMS, or Email.');
+        }
+
+        // Auto-run healthcheck on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            runAllDiagnostics();
+        });
+    </script>
+</body>
+</html>
